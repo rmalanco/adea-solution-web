@@ -8,5 +8,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'adea-solution-web';
+  title = 'AdeA Solution Technical Test';
 }
