@@ -1,0 +1,94 @@
+.container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.actions {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 16px;
+}
+
+.no-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  gap: 16px;
+  color: #666;
+}
+
+.no-data mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+}
+
+.estado-badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.estado-badge.activo {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+}
+
+.expedientes-count {
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.expedientes-count.has-expedientes {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.mat-mdc-icon-button[disabled] {
+  opacity: 0.3;
+}
+
+.mat-mdc-card {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.mat-mdc-card-header {
+  background-color: #fafafa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.mat-mdc-card-title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
+}
+
+.mat-mdc-card-subtitle {
+  color: #666;
+  margin-top: 4px;
+}

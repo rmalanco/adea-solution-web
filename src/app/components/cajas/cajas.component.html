@@ -1,0 +1,84 @@
+<div class="container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Gestión de Cajas</mat-card-title>
+            <mat-card-subtitle>Administra las cajas del sistema</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="actions">
+                <button mat-raised-button color="primary" (click)="openCreateDialog()">
+                    <mat-icon>add</mat-icon>
+                    Nueva Caja
+                </button>
+            </div>
+
+            <div *ngIf="loading" class="loading">
+                <mat-spinner diameter="50"></mat-spinner>
+                <p>Cargando cajas...</p>
+            </div>
+
+            <div *ngIf="!loading && cajas.length === 0" class="no-data">
+                <mat-icon>inbox</mat-icon>
+                <p>No hay cajas registradas</p>
+            </div>
+
+            <div *ngIf="!loading && cajas.length > 0" class="table-container">
+                <table mat-table [dataSource]="cajas" class="mat-elevation-z2">
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="caja_Id">
+                        <th mat-header-cell *matHeaderCellDef>ID</th>
+                        <td mat-cell *matCellDef="let caja">{{ caja.caja_Id }}</td>
+                    </ng-container>
+
+                    <!-- Estado Column -->
+                    <ng-container matColumnDef="estado">
+                        <th mat-header-cell *matHeaderCellDef>Estado</th>
+                        <td mat-cell *matCellDef="let caja">
+                            <span class="estado-badge" [class.activo]="caja.estado === 'ACT'">
+                                {{ caja.estado }}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Ubicación Column -->
+                    <ng-container matColumnDef="ubicacion_Id">
+                        <th mat-header-cell *matHeaderCellDef>Ubicación</th>
+                        <td mat-cell *matCellDef="let caja">{{ caja.ubicacion_Id }}</td>
+                    </ng-container>
+
+                    <!-- Expedientes Count Column -->
+                    <ng-container matColumnDef="expedientesCount">
+                        <th mat-header-cell *matHeaderCellDef>Expedientes</th>
+                        <td mat-cell *matCellDef="let caja">
+                            <span class="expedientes-count" [class.has-expedientes]="caja.expedientesCount > 0">
+                                {{ caja.expedientesCount }}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <!-- Actions Column -->
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                        <td mat-cell *matCellDef="let caja">
+                            <button mat-icon-button (click)="viewExpedientes(caja)" matTooltip="Ver Expedientes"
+                                color="primary">
+                                <mat-icon>folder_open</mat-icon>
+                            </button>
+                            <button mat-icon-button (click)="openEditDialog(caja)" matTooltip="Editar" color="accent">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button (click)="deleteCaja(caja)" matTooltip="Eliminar" color="warn"
+                                [disabled]="caja.expedientesCount > 0">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

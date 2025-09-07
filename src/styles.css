@@ -1,1 +1,61 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+/* Define the palettes for your theme using the Material Design palettes available in palette.scss
+   (imported above). For each palette, you can optionally specify a default, lighter, and darker
+   hue. Available color palettes: https://material.io/design/color/ */
+$adea-primary: mat.define-palette(mat.$indigo-palette);
+$adea-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+
+/* The warn palette is optional (defaults to red). */
+$adea-warn: mat.define-palette(mat.$red-palette);
+
+/* Create the theme object. A theme consists of configurations for individual
+   theming systems such as "color" or "typography". */
+$adea-theme: mat.define-light-theme((
+  color: (
+    primary: $adea-primary,
+    accent: $adea-accent,
+    warn: $adea-warn,
+  )
+));
+
+/* Include theme styles for core and each component used in your app.
+   Alternatively, you can import and @include the theme mixins for each component
+   that you are using. */
+@include mat.core();
+
+@include mat.all-component-themes($adea-theme);
+
+/* Global Styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+body {
+  background-color: #fafafa;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

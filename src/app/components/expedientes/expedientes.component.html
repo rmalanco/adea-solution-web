@@ -1,0 +1,97 @@
+<div class="container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Gestión de Expedientes</mat-card-title>
+            <mat-card-subtitle>Administra los expedientes del sistema</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+            <div class="actions">
+                <button mat-raised-button color="primary" (click)="openCreateDialog()">
+                    <mat-icon>add</mat-icon>
+                    Nuevo Expediente
+                </button>
+
+                <div class="filter-section">
+                    <mat-chip-set>
+                        <mat-chip [class.selected]="selectedCajaId === null" (click)="filterByCaja(null)">
+                            Todos
+                        </mat-chip>
+                        <mat-chip *ngFor="let caja of cajas" [class.selected]="selectedCajaId === caja.caja_Id"
+                            (click)="filterByCaja(caja.caja_Id)">
+                            Caja {{ caja.caja_Id }} ({{ caja.expedientesCount }})
+                        </mat-chip>
+                    </mat-chip-set>
+                </div>
+            </div>
+
+            <div *ngIf="loading" class="loading">
+                <mat-spinner diameter="50"></mat-spinner>
+                <p>Cargando expedientes...</p>
+            </div>
+
+            <div *ngIf="!loading && expedientes.length === 0" class="no-data">
+                <mat-icon>folder_open</mat-icon>
+                <p>No hay expedientes registrados</p>
+            </div>
+
+            <div *ngIf="!loading && expedientes.length > 0" class="table-container">
+                <table mat-table [dataSource]="expedientes" class="mat-elevation-z2">
+                    <!-- ID Column -->
+                    <ng-container matColumnDef="expediente_Id">
+                        <th mat-header-cell *matHeaderCellDef>ID</th>
+                        <td mat-cell *matCellDef="let expediente">{{ expediente.expediente_Id }}</td>
+                    </ng-container>
+
+                    <!-- Caja Column -->
+                    <ng-container matColumnDef="caja_Id">
+                        <th mat-header-cell *matHeaderCellDef>Caja</th>
+                        <td mat-cell *matCellDef="let expediente">
+                            <div class="caja-info">
+                                <span class="caja-id">Caja {{ expediente.caja_Id }}</span>
+                                <span class="caja-details" *ngIf="getCajaInfo(expediente.caja_Id)">
+                                    {{ getCajaInfo(expediente.caja_Id)?.estado }} - {{
+                                    getCajaInfo(expediente.caja_Id)?.ubicacion_Id }}
+                                </span>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Nombre Empleado Column -->
+                    <ng-container matColumnDef="nombre_Empleado">
+                        <th mat-header-cell *matHeaderCellDef>Empleado</th>
+                        <td mat-cell *matCellDef="let expediente">{{ expediente.nombre_Empleado }}</td>
+                    </ng-container>
+
+                    <!-- Tipo Expediente Column -->
+                    <ng-container matColumnDef="tipo_Expediente">
+                        <th mat-header-cell *matHeaderCellDef>Tipo</th>
+                        <td mat-cell *matCellDef="let expediente">
+                            <mat-chip [color]="getTipoExpedienteColor(expediente.tipo_Expediente)">
+                                {{ expediente.tipo_Expediente }}
+                            </mat-chip>
+                        </td>
+                    </ng-container>
+
+                    <!-- Actions Column -->
+                    <ng-container matColumnDef="actions">
+                        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                        <td mat-cell *matCellDef="let expediente">
+                            <button mat-icon-button (click)="openEditDialog(expediente)" matTooltip="Editar"
+                                color="accent">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-icon-button (click)="deleteExpediente(expediente)" matTooltip="Eliminar"
+                                color="warn">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
