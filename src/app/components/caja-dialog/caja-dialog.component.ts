@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faBox, faPlus, faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { ApiService } from '../../services/api.service';
 import { Caja, CreateCajaRequest, UpdateCajaRequest } from '../../models/caja-expediente.models';
@@ -27,7 +29,8 @@ export interface CajaDialogData {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    FontAwesomeModule
   ],
   templateUrl: './caja-dialog.component.html',
   styleUrl: './caja-dialog.component.css'
@@ -36,6 +39,12 @@ export class CajaDialogComponent implements OnInit {
   cajaForm: FormGroup;
   ubicaciones = UBICACIONES;
   isEditMode = false;
+
+  // Font Awesome icons
+  faBox = faBox;
+  faPlus = faPlus;
+  faEdit = faEdit;
+  faTimes = faTimes;
 
   constructor(
     private fb: FormBuilder,

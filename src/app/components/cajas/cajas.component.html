@@ -31,19 +31,19 @@
                 <fa-icon [icon]="faCheckCircle"></fa-icon>
             </div>
             <div class="stat-content">
-                <div class="stat-value">{{ getActiveCajasCount() }}</div>
+                <div class="stat-value">{{ getCajasByStatus('ACT').length }}</div>
                 <div class="stat-label">Cajas Activas</div>
-                <div class="stat-trend positive">{{ cajas.length > 0 ? ((getActiveCajasCount() / cajas.length) *
-                    100).toFixed(1) : 0 }}% activas</div>
+                <div class="stat-trend positive">{{ cajas.length > 0 ? ((getCajasByStatus('ACT').length / cajas.length)
+                    * 100).toFixed(1) : 0 }}% activas</div>
             </div>
         </div>
 
         <div class="stat-card warning">
             <div class="stat-icon">
-                <fa-icon [icon]="faExclamationTriangle"></fa-icon>
+                <fa-icon [icon]="faTimesCircle"></fa-icon>
             </div>
             <div class="stat-content">
-                <div class="stat-value">{{ getInactiveCajasCount() }}</div>
+                <div class="stat-value">{{ getCajasByStatus('INA').length }}</div>
                 <div class="stat-label">Cajas Inactivas</div>
                 <div class="stat-trend negative">Requieren atención</div>
             </div>
@@ -54,13 +54,12 @@
                 <fa-icon [icon]="faFolder"></fa-icon>
             </div>
             <div class="stat-content">
-                <div class="stat-value">{{ getTotalExpedientesCount() }}</div>
+                <div class="stat-value">{{ getTotalExpedientes() }}</div>
                 <div class="stat-label">Expedientes</div>
                 <div class="stat-trend positive">En cajas</div>
             </div>
         </div>
     </div>
-
 
     <!-- Data Table Card -->
     <mat-card class="data-table-card">
@@ -82,7 +81,7 @@
             <div class="table-container">
                 <table mat-table [dataSource]="cajas" class="modern-table">
                     <!-- ID Column -->
-                    <ng-container matColumnDef="id">
+                    <ng-container matColumnDef="caja_Id">
                         <th mat-header-cell *matHeaderCellDef class="table-header">
                             <span>ID</span>
                         </th>
@@ -93,46 +92,48 @@
                         </td>
                     </ng-container>
 
-                    <!-- Estado Column -->
+                    <!-- Status Column -->
                     <ng-container matColumnDef="estado">
                         <th mat-header-cell *matHeaderCellDef class="table-header">
                             <span>Estado</span>
                         </th>
                         <td mat-cell *matCellDef="let caja" class="table-cell">
                             <div class="cell-content">
-                                <span class="status-badge" [class]="'status-' + caja.estado?.toLowerCase()">
-                                    <fa-icon [icon]="caja.estado === 'ACT' ? faCheckCircle : faTimesCircle"></fa-icon>
+                                <span class="status-badge" [class.status-activo]="caja.estado === 'ACT'"
+                                    [class.status-inactivo]="caja.estado === 'INA'">
+                                    <fa-icon [icon]="caja.estado === 'ACT' ? faCheckCircle : faTimesCircle"
+                                        class="status-icon"></fa-icon>
                                     {{ caja.estado === 'ACT' ? 'Activo' : 'Inactivo' }}
                                 </span>
                             </div>
                         </td>
                     </ng-container>
 
-                    <!-- Ubicación Column -->
-                    <ng-container matColumnDef="ubicacion">
+                    <!-- Location Column -->
+                    <ng-container matColumnDef="ubicacion_Id">
                         <th mat-header-cell *matHeaderCellDef class="table-header">
                             <span>Ubicación</span>
                         </th>
                         <td mat-cell *matCellDef="let caja" class="table-cell">
                             <div class="cell-content">
-                                <div class="location-info">
-                                    <fa-icon [icon]="faMapMarkerAlt" class="location-icon"></fa-icon>
-                                    <span>{{ caja.ubicacion_Id }}</span>
+                                <div class="ubicacion-info">
+                                    <fa-icon [icon]="faMapMarkerAlt" class="cell-icon"></fa-icon>
+                                    {{ caja.ubicacion_Id }}
                                 </div>
                             </div>
                         </td>
                     </ng-container>
 
                     <!-- Expedientes Column -->
-                    <ng-container matColumnDef="expedientes">
+                    <ng-container matColumnDef="expedientesCount">
                         <th mat-header-cell *matHeaderCellDef class="table-header">
                             <span>Expedientes</span>
                         </th>
                         <td mat-cell *matCellDef="let caja" class="table-cell">
                             <div class="cell-content">
-                                <div class="expedientes-count">
-                                    <fa-icon [icon]="faFolder" class="expedientes-icon"></fa-icon>
-                                    <span>{{ caja.expedientesCount || 0 }}</span>
+                                <div class="expedientes-info">
+                                    <fa-icon [icon]="faFolder" class="cell-icon"></fa-icon>
+                                    {{ caja.expedientesCount || 0 }}
                                 </div>
                             </div>
                         </td>
@@ -154,7 +155,7 @@
                                     <fa-icon [icon]="faEdit"></fa-icon>
                                 </button>
                                 <button mat-icon-button class="action-btn danger" title="Eliminar"
-                                    (click)="deleteCaja(caja.caja_Id)">
+                                    (click)="deleteCaja(caja)">
                                     <fa-icon [icon]="faTrash"></fa-icon>
                                 </button>
                             </div>
@@ -162,28 +163,9 @@
                     </ng-container>
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="table-row"
-                        [class.selected]="selectedCaja === row" (click)="selectCaja(row)"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectCaja(row)"
+                        [class.selected-row]="selectedCaja === row"></tr>
                 </table>
-
-                <!-- Empty State -->
-                <div class="empty-state" *ngIf="cajas.length === 0">
-                    <div class="empty-icon">
-                        <fa-icon [icon]="faBox" size="3x"></fa-icon>
-                    </div>
-                    <h3>No hay cajas registradas</h3>
-                    <p>Comienza creando tu primera caja en el sistema</p>
-                    <button mat-raised-button color="primary" (click)="openCreateDialog()">
-                        <fa-icon [icon]="faPlus"></fa-icon>
-                        Crear Primera Caja
-                    </button>
-                </div>
-
-                <!-- Loading State -->
-                <div class="loading-state" *ngIf="isLoading">
-                    <mat-spinner diameter="40"></mat-spinner>
-                    <p>Cargando cajas...</p>
-                </div>
             </div>
         </mat-card-content>
     </mat-card>

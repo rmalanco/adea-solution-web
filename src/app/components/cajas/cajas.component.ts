@@ -38,7 +38,7 @@ import { CajaDetailsComponent } from '../caja-details/caja-details.component';
 })
 export class CajasComponent implements OnInit {
   cajas: Caja[] = [];
-  displayedColumns: string[] = ['id', 'estado', 'ubicacion', 'expedientes', 'actions'];
+  displayedColumns: string[] = ['caja_Id', 'estado', 'ubicacion_Id', 'expedientesCount', 'actions'];
   loading = false;
 
   // Component properties
@@ -159,6 +159,15 @@ export class CajasComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       // No action needed after closing details dialog
     });
+  }
+
+  // Methods for modern dashboard stats
+  getCajasByStatus(status: string): Caja[] {
+    return this.cajas.filter(caja => caja.estado === status);
+  }
+
+  getTotalExpedientes(): number {
+    return this.cajas.reduce((total, caja) => total + (caja.expedientesCount || 0), 0);
   }
 
 }
