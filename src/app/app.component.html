@@ -1,69 +1,121 @@
-<mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="'navigation'" [mode]="'side'" [opened]="true">
-        <div class="sidebar-header">
-            <div class="logo-section">
-                <div class="logo-icon">
-                    <fa-icon [icon]="faBox" size="2x"></fa-icon>
-                </div>
-                <div class="logo-text">
-                    <h3>ADEA</h3>
-                    <p>Solution</p>
+<div class="modern-layout">
+    <mat-sidenav-container class="sidenav-container">
+        <mat-sidenav #drawer class="modern-sidenav" fixedInViewport mode="side" opened>
+            <!-- Sidebar Header -->
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <div class="logo-icon-wrapper">
+                        <fa-icon [icon]="faDatabase" class="logo-icon"></fa-icon>
+                    </div>
+                    <div class="logo-text">
+                        <h3 class="logo-title">ADEA</h3>
+                        <p class="logo-subtitle">Solution</p>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="sidebar-content">
-            <mat-nav-list class="nav-list">
-                <a mat-list-item routerLink="/cajas" routerLinkActive="active-link" class="nav-item">
-                    <div class="nav-icon">
-                        <fa-icon [icon]="faBox"></fa-icon>
-                    </div>
-                    <span class="nav-text">Cajas</span>
-                    <div class="nav-indicator"></div>
-                </a>
-                <a mat-list-item routerLink="/expedientes" routerLinkActive="active-link" class="nav-item">
-                    <div class="nav-icon">
-                        <fa-icon [icon]="faFolder"></fa-icon>
-                    </div>
-                    <span class="nav-text">Expedientes</span>
-                    <div class="nav-indicator"></div>
-                </a>
-            </mat-nav-list>
-        </div>
-
-        <div class="sidebar-footer">
-            <div class="user-info">
-                <div class="user-avatar">
-                    <fa-icon [icon]="faUser"></fa-icon>
+            <!-- Navigation Menu -->
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Principal</h4>
+                    <ul class="nav-list">
+                        <li>
+                            <a class="nav-item" routerLink="/cajas" routerLinkActive="active">
+                                <div class="nav-item-icon">
+                                    <fa-icon [icon]="faBox"></fa-icon>
+                                </div>
+                                <span class="nav-item-text">Cajas</span>
+                                <div class="nav-item-indicator"></div>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-item" routerLink="/expedientes" routerLinkActive="active">
+                                <div class="nav-item-icon">
+                                    <fa-icon [icon]="faFolder"></fa-icon>
+                                </div>
+                                <span class="nav-item-text">Expedientes</span>
+                                <div class="nav-item-indicator"></div>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <div class="user-details">
-                    <span class="user-name">Administrador</span>
-                    <span class="user-role">Sistema</span>
-                </div>
-            </div>
-        </div>
-    </mat-sidenav>
 
-    <mat-sidenav-content>
-        <mat-toolbar color="primary" class="main-toolbar">
-            <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
-                class="menu-toggle">
-                <fa-icon [icon]="faBars"></fa-icon>
-            </button>
-            <div class="toolbar-content">
-                <span class="toolbar-title">{{ title }}</span>
-                <div class="toolbar-actions">
-                    <button mat-icon-button class="theme-toggle" (click)="toggleTheme()">
-                        <fa-icon [icon]="isDarkTheme ? faSun : faMoon"></fa-icon>
+                <div class="nav-section">
+                    <h4 class="nav-section-title">Herramientas</h4>
+                    <ul class="nav-list">
+                        <li>
+                            <a class="nav-item" href="#" (click)="$event.preventDefault()">
+                                <div class="nav-item-icon">
+                                    <fa-icon [icon]="faChartBar"></fa-icon>
+                                </div>
+                                <span class="nav-item-text">Reportes</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-item" href="#" (click)="$event.preventDefault()">
+                                <div class="nav-item-icon">
+                                    <fa-icon [icon]="faCog"></fa-icon>
+                                </div>
+                                <span class="nav-item-text">Configuración</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="user-card">
+                    <div class="user-avatar">
+                        <fa-icon [icon]="faUser"></fa-icon>
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">Usuario</span>
+                        <span class="user-role">Administrador</span>
+                    </div>
+                    <button class="user-menu-btn" mat-icon-button>
+                        <fa-icon [icon]="faEllipsisV"></fa-icon>
                     </button>
                 </div>
             </div>
-        </mat-toolbar>
+        </mat-sidenav>
 
-        <main class="main-content">
-            <div class="content-wrapper">
-                <router-outlet></router-outlet>
-            </div>
-        </main>
-    </mat-sidenav-content>
-</mat-sidenav-container>
+        <!-- Main Content Area -->
+        <mat-sidenav-content class="main-content">
+            <!-- Top Toolbar -->
+            <mat-toolbar class="modern-toolbar">
+                <div class="toolbar-left">
+                    <button type="button" aria-label="Toggle sidenav" mat-icon-button class="menu-toggle"
+                        (click)="drawer.toggle()">
+                        <fa-icon [icon]="faBars"></fa-icon>
+                    </button>
+                    <div class="breadcrumb">
+                        <span class="breadcrumb-item">Dashboard</span>
+                        <fa-icon [icon]="faChevronRight" class="breadcrumb-separator"></fa-icon>
+                        <span class="breadcrumb-item current">ADEA Solution</span>
+                    </div>
+                </div>
+
+                <div class="toolbar-right">
+                    <button mat-icon-button class="toolbar-action" title="Notificaciones">
+                        <fa-icon [icon]="faBell"></fa-icon>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <button mat-icon-button class="toolbar-action" title="Búsqueda">
+                        <fa-icon [icon]="faSearch"></fa-icon>
+                    </button>
+                    <button mat-icon-button class="toolbar-action" title="Cambiar tema" (click)="toggleTheme()">
+                        <fa-icon [icon]="isDarkTheme ? faSun : faMoon"></fa-icon>
+                    </button>
+                </div>
+            </mat-toolbar>
+
+            <!-- Page Content -->
+            <main class="page-content">
+                <div class="content-container">
+                    <router-outlet></router-outlet>
+                </div>
+            </main>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

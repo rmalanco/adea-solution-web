@@ -1,16 +1,11 @@
+/* Angular Material Theme Configuration (SCSS syntax commented for CSS compatibility) */
+/*
 @use '@angular/material' as mat;
 
-/* Define the palettes for your theme using the Material Design palettes available in palette.scss
-   (imported above). For each palette, you can optionally specify a default, lighter, and darker
-   hue. Available color palettes: https://material.io/design/color/ */
 $adea-primary: mat.define-palette(mat.$indigo-palette);
 $adea-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-
-/* The warn palette is optional (defaults to red). */
 $adea-warn: mat.define-palette(mat.$red-palette);
 
-/* Create the theme object. A theme consists of configurations for individual
-   theming systems such as "color" or "typography". */
 $adea-theme: mat.define-light-theme((
   color: (
     primary: $adea-primary,
@@ -19,12 +14,9 @@ $adea-theme: mat.define-light-theme((
   )
 ));
 
-/* Include theme styles for core and each component used in your app.
-   Alternatively, you can import and @include the theme mixins for each component
-   that you are using. */
 @include mat.core();
-
 @include mat.all-component-themes($adea-theme);
+*/
 
 /* Global Styles */
 html, body {
@@ -218,23 +210,28 @@ input, textarea, .mat-mdc-form-field {
   backdrop-filter: blur(4px);
 }
 
-/* Select Panel Fix for Dialogs - Higher z-index */
+/* Select Panel Fix for Dialogs - Higher z-index and Solid Background */
 ::ng-deep .mat-mdc-select-panel {
   max-height: 200px !important;
   z-index: 2000 !important;
   border-radius: 12px !important;
   box-shadow: 0 16px 32px rgba(0,0,0,0.15), 0 8px 16px rgba(0,0,0,0.1) !important;
   background-color: #ffffff !important;
+  background: #ffffff !important;
   border: 1px solid #e0e0e0 !important;
   margin-top: 8px !important;
   font-family: 'Inter', sans-serif !important;
   position: fixed !important;
+  opacity: 1 !important;
 }
 
 ::ng-deep .mat-mdc-select-panel-above {
   z-index: 2000 !important;
   margin-bottom: 8px !important;
   position: fixed !important;
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  opacity: 1 !important;
 }
 
 /* CDK Overlay Panel Fix */
@@ -244,58 +241,31 @@ input, textarea, .mat-mdc-form-field {
 
 ::ng-deep .mat-mdc-select-panel-wrap {
   z-index: 2000 !important;
-}
-
-/* Select Options */
-::ng-deep .mat-mdc-option {
-  font-family: 'Inter', sans-serif !important;
-  font-weight: 400 !important;
-  color: #333 !important;
-  padding: 12px 16px !important;
-  min-height: 48px !important;
-  font-size: 16px !important;
-}
-
-::ng-deep .mat-mdc-option:hover {
-  background-color: #f5f5f5 !important;
-}
-
-::ng-deep .mat-mdc-option.mdc-list-item--selected {
-  background-color: #e3f2fd !important;
-  color: #1976d2 !important;
-  font-weight: 500 !important;
-}
-
-/* Form Field Improvements */
-::ng-deep .mat-mdc-form-field {
-  font-family: 'Inter', sans-serif !important;
-  width: 100% !important;
-}
-
-::ng-deep .mat-mdc-form-field .mat-mdc-text-field-wrapper {
   background-color: #ffffff !important;
-  border-radius: 8px !important;
+  background: #ffffff !important;
 }
 
-::ng-deep .mat-mdc-form-field .mat-mdc-form-field-focus-overlay {
-  background-color: transparent !important;
+/* Select Panel Background Fix */
+::ng-deep .mat-mdc-select-panel .mat-mdc-option {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
 }
 
-::ng-deep .mat-mdc-form-field .mat-mdc-form-field-outline {
-  color: #d0d0d0 !important;
+::ng-deep .mat-mdc-select-panel .mat-mdc-option:hover {
+  background-color: #f5f5f5 !important;
+  background: #f5f5f5 !important;
 }
 
-::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-form-field-outline {
-  color: #1976d2 !important;
-}
-
-/* Input Elements */
+/* Input Elements - Placeholder and Content Alignment */
 ::ng-deep .mat-mdc-input-element {
   font-family: 'Inter', sans-serif !important;
   font-weight: 400 !important;
   color: #333 !important;
   font-size: 16px !important;
   padding: 16px 16px 8px 16px !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+  line-height: 1.5 !important;
 }
 
 ::ng-deep .mat-mdc-input-element::placeholder {
@@ -303,6 +273,10 @@ input, textarea, .mat-mdc-form-field {
   font-weight: 400 !important;
   color: #999 !important;
   font-size: 16px !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+  line-height: 1.5 !important;
+  opacity: 1 !important;
 }
 
 ::ng-deep .mat-mdc-select-value {
@@ -311,14 +285,36 @@ input, textarea, .mat-mdc-form-field {
   color: #333 !important;
   font-size: 16px !important;
   padding: 16px 16px 8px 16px !important;
+  text-align: left !important;
+  vertical-align: middle !important;
+  line-height: 1.5 !important;
 }
 
-/* Labels */
+/* Form Field Wrapper Alignment */
+::ng-deep .mat-mdc-form-field .mat-mdc-text-field-wrapper {
+  background-color: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 0 !important;
+}
+
+::ng-deep .mat-mdc-form-field .mat-mdc-form-field-infix {
+  padding: 0 !important;
+  border-top: none !important;
+}
+
+::ng-deep .mat-mdc-form-field .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex {
+  align-items: center !important;
+  padding: 0 16px !important;
+}
+
+/* Labels Alignment */
 ::ng-deep .mat-mdc-form-field-label {
   font-family: 'Inter', sans-serif !important;
   font-weight: 500 !important;
   color: #555 !important;
   font-size: 16px !important;
+  text-align: left !important;
+  vertical-align: middle !important;
 }
 
 ::ng-deep .mat-mdc-form-field-label.mdc-floating-label--float-above {
@@ -326,15 +322,19 @@ input, textarea, .mat-mdc-form-field {
   font-weight: 500 !important;
   color: #1976d2 !important;
   font-size: 12px !important;
+  text-align: left !important;
+  vertical-align: middle !important;
 }
 
-/* Hints and Errors */
+/* Hints and Errors Alignment */
 ::ng-deep .mat-mdc-form-field-hint {
   font-family: 'Inter', sans-serif !important;
   font-size: 12px !important;
   color: #666 !important;
   font-weight: 400 !important;
   padding: 0 16px !important;
+  text-align: left !important;
+  margin-top: 4px !important;
 }
 
 ::ng-deep .mat-mdc-form-field-error {
@@ -343,6 +343,454 @@ input, textarea, .mat-mdc-form-field {
   color: #d32f2f !important;
   font-weight: 500 !important;
   padding: 0 16px !important;
+  text-align: left !important;
+  margin-top: 4px !important;
+}
+
+/* MAT-SELECT TRANSPARENCY FIX - Comprehensive Solution */
+/* Target all possible mat-select panel containers */
+::ng-deep .mat-mdc-select-panel,
+::ng-deep .mat-mdc-select-panel-above,
+::ng-deep .mat-mdc-select-panel-wrap,
+::ng-deep .cdk-overlay-pane .mat-mdc-select-panel,
+::ng-deep .mat-mdc-select-panel.mat-mdc-select-panel-above {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  border: 1px solid #e0e0e0 !important;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Force solid background on all option containers */
+::ng-deep .mat-mdc-select-panel .mat-mdc-option,
+::ng-deep .mat-mdc-select-panel-above .mat-mdc-option,
+::ng-deep .mat-mdc-select-panel-wrap .mat-mdc-option {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  background-image: none !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 400 !important;
+  color: #333 !important;
+  padding: 12px 16px !important;
+  min-height: 48px !important;
+  font-size: 16px !important;
+  opacity: 1 !important;
+}
+
+/* Hover state with solid background */
+::ng-deep .mat-mdc-select-panel .mat-mdc-option:hover,
+::ng-deep .mat-mdc-select-panel-above .mat-mdc-option:hover,
+::ng-deep .mat-mdc-select-panel-wrap .mat-mdc-option:hover {
+  background-color: #f5f5f5 !important;
+  background: #f5f5f5 !important;
+  background-image: none !important;
+  opacity: 1 !important;
+}
+
+/* Selected state with solid background */
+::ng-deep .mat-mdc-select-panel .mat-mdc-option.mdc-list-item--selected,
+::ng-deep .mat-mdc-select-panel-above .mat-mdc-option.mdc-list-item--selected,
+::ng-deep .mat-mdc-select-panel-wrap .mat-mdc-option.mdc-list-item--selected {
+  background-color: #e3f2fd !important;
+  background: #e3f2fd !important;
+  background-image: none !important;
+  color: #1976d2 !important;
+  font-weight: 500 !important;
+  opacity: 1 !important;
+}
+
+/* Additional CDK overlay fixes */
+::ng-deep .cdk-overlay-pane {
+  background-color: transparent !important;
+}
+
+::ng-deep .cdk-overlay-pane .mat-mdc-select-panel {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  background-image: none !important;
+  opacity: 1 !important;
+}
+
+/* NUCLEAR OPTION - Force ALL mat-select panels to be solid */
+/* This is the most aggressive approach possible */
+::ng-deep [class*="mat-mdc-select-panel"],
+::ng-deep [class*="mat-select-panel"],
+::ng-deep [class*="mdc-list"],
+::ng-deep .cdk-overlay-pane [class*="mat-mdc-select-panel"],
+::ng-deep .cdk-overlay-pane [class*="mat-select-panel"],
+::ng-deep .cdk-overlay-pane [class*="mdc-list"] {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Force ALL mat-option elements to be solid */
+::ng-deep [class*="mat-mdc-option"],
+::ng-deep [class*="mat-option"],
+::ng-deep [class*="mdc-list-item"] {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+  background-image: none !important;
+  opacity: 1 !important;
+}
+
+/* Force hover states on ALL options */
+::ng-deep [class*="mat-mdc-option"]:hover,
+::ng-deep [class*="mat-option"]:hover,
+::ng-deep [class*="mdc-list-item"]:hover {
+  background-color: #f5f5f5 !important;
+  background: #f5f5f5 !important;
+  background-image: none !important;
+  opacity: 1 !important;
+}
+
+/* ============================================
+   MODERN DASHBOARD DESIGN SYSTEM
+   ============================================ */
+
+/* CSS Custom Properties for Design System */
+:root {
+  /* Enhanced Color Palette */
+  --primary-50: #e8eaf6;
+  --primary-100: #c5cae9;
+  --primary-200: #9fa8da;
+  --primary-300: #7986cb;
+  --primary-400: #5c6bc0;
+  --primary-500: #3f51b5;
+  --primary-600: #3949ab;
+  --primary-700: #303f9f;
+  --primary-800: #283593;
+  --primary-900: #1a237e;
+  
+  --accent-50: #fce4ec;
+  --accent-100: #f8bbd9;
+  --accent-200: #f48fb1;
+  --accent-300: #f06292;
+  --accent-400: #ec407a;
+  --accent-500: #e91e63;
+  --accent-600: #d81b60;
+  --accent-700: #c2185b;
+  --accent-800: #ad1457;
+  --accent-900: #880e4f;
+  
+  /* Surface Colors */
+  --surface-0: #ffffff;
+  --surface-1: #f8f9fa;
+  --surface-2: #f1f3f4;
+  --surface-3: #e8eaed;
+  --surface-4: #dadce0;
+  
+  /* Semantic Colors */
+  --success-color: #4caf50;
+  --success-light: #81c784;
+  --success-dark: #388e3c;
+  --warning-color: #ff9800;
+  --warning-light: #ffb74d;
+  --warning-dark: #f57c00;
+  --error-color: #f44336;
+  --error-light: #e57373;
+  --error-dark: #d32f2f;
+  --info-color: #2196f3;
+  --info-light: #64b5f6;
+  --info-dark: #1976d2;
+  
+  /* Text Colors */
+  --text-primary: #1a1a1a;
+  --text-secondary: #6b7280;
+  --text-disabled: #9ca3af;
+  --text-on-primary: #ffffff;
+  --text-on-dark: #ffffff;
+  --text-on-surface: #1a1a1a;
+  
+  /* Enhanced Shadows */
+  --elevation-0: none;
+  --elevation-1: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --elevation-2: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --elevation-3: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --elevation-4: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --elevation-5: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --elevation-6: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  
+  /* Spacing System */
+  --space-0: 0;
+  --space-1: 0.25rem;  /* 4px */
+  --space-2: 0.5rem;   /* 8px */
+  --space-3: 0.75rem;  /* 12px */
+  --space-4: 1rem;     /* 16px */
+  --space-5: 1.25rem;  /* 20px */
+  --space-6: 1.5rem;   /* 24px */
+  --space-8: 2rem;     /* 32px */
+  --space-10: 2.5rem;  /* 40px */
+  --space-12: 3rem;    /* 48px */
+  --space-16: 4rem;    /* 64px */
+  --space-20: 5rem;    /* 80px */
+  --space-24: 6rem;    /* 96px */
+  
+  /* Border Radius */
+  --radius-none: 0;
+  --radius-sm: 0.125rem;   /* 2px */
+  --radius-base: 0.25rem;  /* 4px */
+  --radius-md: 0.375rem;   /* 6px */
+  --radius-lg: 0.5rem;     /* 8px */
+  --radius-xl: 0.75rem;    /* 12px */
+  --radius-2xl: 1rem;      /* 16px */
+  --radius-3xl: 1.5rem;    /* 24px */
+  --radius-full: 9999px;
+  
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 200ms ease-in-out;
+  --transition-slow: 300ms ease-in-out;
+  --transition-slower: 500ms ease-in-out;
+}
+
+/* Modern Card Styles */
+::ng-deep .mat-mdc-card {
+  background: var(--surface-0) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--elevation-2) !important;
+  border: 1px solid var(--surface-3) !important;
+  transition: all var(--transition-base) !important;
+  overflow: hidden !important;
+}
+
+::ng-deep .mat-mdc-card:hover {
+  box-shadow: var(--elevation-4) !important;
+  transform: translateY(-2px) !important;
+}
+
+::ng-deep .mat-mdc-card-header {
+  padding: var(--space-6) var(--space-6) var(--space-4) var(--space-6) !important;
+  background: linear-gradient(135deg, var(--surface-0) 0%, var(--surface-1) 100%) !important;
+  border-bottom: 1px solid var(--surface-2) !important;
+}
+
+::ng-deep .mat-mdc-card-content {
+  padding: var(--space-6) !important;
+  color: var(--text-on-surface) !important;
+}
+
+::ng-deep .mat-mdc-card-title {
+  font-size: 1.25rem !important;
+  font-weight: var(--font-weight-semibold) !important;
+  color: var(--text-primary) !important;
+  margin-bottom: var(--space-1) !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+::ng-deep .mat-mdc-card-subtitle {
+  font-size: 0.875rem !important;
+  color: var(--text-secondary) !important;
+  font-weight: var(--font-weight-regular) !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Modern Button Styles */
+::ng-deep .mat-mdc-button,
+::ng-deep .mat-mdc-raised-button,
+::ng-deep .mat-mdc-outlined-button {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: var(--font-weight-medium) !important;
+  border-radius: var(--radius-lg) !important;
+  text-transform: none !important;
+  letter-spacing: 0.025em !important;
+  transition: all var(--transition-base) !important;
+  min-height: 40px !important;
+  padding: 0 var(--space-6) !important;
+}
+
+::ng-deep .mat-mdc-raised-button {
+  box-shadow: var(--elevation-2) !important;
+}
+
+::ng-deep .mat-mdc-raised-button:hover {
+  box-shadow: var(--elevation-3) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Modern Toolbar */
+::ng-deep .mat-mdc-toolbar {
+  background: var(--surface-0) !important;
+  color: var(--text-primary) !important;
+  box-shadow: var(--elevation-2) !important;
+  border-bottom: 1px solid var(--surface-2) !important;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Modern Sidenav */
+::ng-deep .mat-mdc-sidenav {
+  background: var(--surface-0) !important;
+  border-right: 1px solid var(--surface-2) !important;
+  box-shadow: var(--elevation-3) !important;
+}
+
+::ng-deep .mat-mdc-sidenav-container {
+  background: var(--surface-1) !important;
+}
+
+/* Modern List Items */
+::ng-deep .mat-mdc-list-item {
+  font-family: 'Inter', sans-serif !important;
+  border-radius: var(--radius-lg) !important;
+  margin: var(--space-1) var(--space-2) !important;
+  transition: all var(--transition-base) !important;
+}
+
+::ng-deep .mat-mdc-list-item:hover {
+  background: var(--surface-2) !important;
+  transform: translateX(4px) !important;
+}
+
+/* Modern Tables */
+::ng-deep .mat-mdc-table {
+  background: var(--surface-0) !important;
+  border-radius: var(--radius-xl) !important;
+  overflow: hidden !important;
+  box-shadow: var(--elevation-2) !important;
+  border: 1px solid var(--surface-2) !important;
+}
+
+::ng-deep .mat-mdc-header-row {
+  background: linear-gradient(135deg, var(--surface-1) 0%, var(--surface-2) 100%) !important;
+  font-weight: var(--font-weight-semibold) !important;
+}
+
+::ng-deep .mat-mdc-row:hover {
+  background: var(--surface-1) !important;
+  transition: background-color var(--transition-base) !important;
+}
+
+::ng-deep .mat-mdc-header-cell,
+::ng-deep .mat-mdc-cell {
+  font-family: 'Inter', sans-serif !important;
+  border-bottom-color: var(--surface-2) !important;
+}
+
+/* Modern Form Fields */
+::ng-deep .mat-mdc-form-field {
+  font-family: 'Inter', sans-serif !important;
+}
+
+::ng-deep .mat-mdc-form-field .mat-mdc-text-field-wrapper {
+  border-radius: var(--radius-lg) !important;
+  background: var(--surface-0) !important;
+  transition: all var(--transition-base) !important;
+}
+
+::ng-deep .mat-mdc-form-field.mat-focused .mat-mdc-text-field-wrapper {
+  box-shadow: var(--elevation-2) !important;
+}
+
+/* Utility Classes */
+.text-primary { color: var(--text-primary) !important; }
+.text-secondary { color: var(--text-secondary) !important; }
+.text-success { color: var(--success-color) !important; }
+.text-warning { color: var(--warning-color) !important; }
+.text-error { color: var(--error-color) !important; }
+.text-info { color: var(--info-color) !important; }
+
+.bg-surface-0 { background-color: var(--surface-0) !important; }
+.bg-surface-1 { background-color: var(--surface-1) !important; }
+.bg-surface-2 { background-color: var(--surface-2) !important; }
+
+.elevation-1 { box-shadow: var(--elevation-1) !important; }
+.elevation-2 { box-shadow: var(--elevation-2) !important; }
+.elevation-3 { box-shadow: var(--elevation-3) !important; }
+.elevation-4 { box-shadow: var(--elevation-4) !important; }
+
+.rounded-sm { border-radius: var(--radius-sm) !important; }
+.rounded-base { border-radius: var(--radius-base) !important; }
+.rounded-md { border-radius: var(--radius-md) !important; }
+.rounded-lg { border-radius: var(--radius-lg) !important; }
+.rounded-xl { border-radius: var(--radius-xl) !important; }
+.rounded-2xl { border-radius: var(--radius-2xl) !important; }
+
+/* Modern Dashboard Stats Cards */
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+.stat-card {
+  background: linear-gradient(135deg, var(--surface-0) 0%, var(--surface-1) 100%);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  box-shadow: var(--elevation-2);
+  border: 1px solid var(--surface-2);
+  transition: all var(--transition-base);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-400), var(--accent-400));
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--elevation-4);
+}
+
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-4);
+  background: linear-gradient(135deg, var(--primary-400), var(--primary-600));
+  color: var(--text-on-primary);
+  font-size: 1.5rem;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  margin-bottom: var(--space-1);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-trend {
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-medium);
+  margin-top: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-base);
+  display: inline-block;
+}
+
+.stat-trend.positive {
+  background: rgba(76, 175, 80, 0.1);
+  color: var(--success-dark);
+}
+
+.stat-trend.negative {
+  background: rgba(244, 67, 54, 0.1);
+  color: var(--error-dark);
 }
 
 /* Button Styling */

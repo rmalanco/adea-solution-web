@@ -6,7 +6,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faBox, faFolder, faPlus, faEdit, faTrash, faEye, faBars, faSun, faMoon, faUser } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faBox, faFolder, faPlus, faEdit, faTrash, faEye, faBars, faSun, faMoon, faUser,
+  faDatabase, faChartBar, faCog, faChevronRight, faBell, faSearch, faEllipsisV
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -39,6 +42,13 @@ export class AppComponent {
   faSun = faSun;
   faMoon = faMoon;
   faUser = faUser;
+  faDatabase = faDatabase;
+  faChartBar = faChartBar;
+  faCog = faCog;
+  faChevronRight = faChevronRight;
+  faBell = faBell;
+  faSearch = faSearch;
+  faEllipsisV = faEllipsisV;
 
   toggleTheme(): void {
     this.isDarkTheme = !this.isDarkTheme;
