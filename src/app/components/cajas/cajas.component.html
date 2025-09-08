@@ -61,29 +61,6 @@
         </div>
     </div>
 
-    <!-- Quick Actions Bar -->
-    <div class="quick-actions-bar">
-        <div class="search-section">
-            <mat-form-field appearance="outline" class="search-field">
-                <mat-label>Buscar cajas...</mat-label>
-                <input matInput placeholder="ID, Estado, Ubicación" [(ngModel)]="searchTerm">
-                <mat-icon matSuffix>search</mat-icon>
-            </mat-form-field>
-        </div>
-        <div class="filter-section">
-            <button mat-stroked-button class="filter-btn">
-                <fa-icon [icon]="faFilter"></fa-icon>
-                Filtros
-            </button>
-            <button mat-stroked-button class="filter-btn">
-                <fa-icon [icon]="faSort"></fa-icon>
-                Ordenar
-            </button>
-            <button mat-icon-button class="action-btn" title="Actualizar" (click)="loadCajas()">
-                <fa-icon [icon]="faSync"></fa-icon>
-            </button>
-        </div>
-    </div>
 
     <!-- Data Table Card -->
     <mat-card class="data-table-card">
@@ -98,17 +75,6 @@
                         {{ cajas.length }} cajas registradas en el sistema
                     </mat-card-subtitle>
                 </div>
-                <div class="card-actions">
-                    <button mat-icon-button class="action-btn" title="Vista de cuadrícula">
-                        <fa-icon [icon]="faThLarge"></fa-icon>
-                    </button>
-                    <button mat-icon-button class="action-btn" title="Vista de lista">
-                        <fa-icon [icon]="faList"></fa-icon>
-                    </button>
-                    <button mat-icon-button class="action-btn" title="Exportar">
-                        <fa-icon [icon]="faDownload"></fa-icon>
-                    </button>
-                </div>
             </div>
         </mat-card-header>
 
@@ -118,10 +84,7 @@
                     <!-- ID Column -->
                     <ng-container matColumnDef="id">
                         <th mat-header-cell *matHeaderCellDef class="table-header">
-                            <div class="header-content">
-                                <span>ID</span>
-                                <fa-icon [icon]="faSort" class="sort-icon"></fa-icon>
-                            </div>
+                            <span>ID</span>
                         </th>
                         <td mat-cell *matCellDef="let caja" class="table-cell">
                             <div class="cell-content">
@@ -133,10 +96,7 @@
                     <!-- Estado Column -->
                     <ng-container matColumnDef="estado">
                         <th mat-header-cell *matHeaderCellDef class="table-header">
-                            <div class="header-content">
-                                <span>Estado</span>
-                                <fa-icon [icon]="faSort" class="sort-icon"></fa-icon>
-                            </div>
+                            <span>Estado</span>
                         </th>
                         <td mat-cell *matCellDef="let caja" class="table-cell">
                             <div class="cell-content">
@@ -151,10 +111,7 @@
                     <!-- Ubicación Column -->
                     <ng-container matColumnDef="ubicacion">
                         <th mat-header-cell *matHeaderCellDef class="table-header">
-                            <div class="header-content">
-                                <span>Ubicación</span>
-                                <fa-icon [icon]="faSort" class="sort-icon"></fa-icon>
-                            </div>
+                            <span>Ubicación</span>
                         </th>
                         <td mat-cell *matCellDef="let caja" class="table-cell">
                             <div class="cell-content">
@@ -169,16 +126,13 @@
                     <!-- Expedientes Column -->
                     <ng-container matColumnDef="expedientes">
                         <th mat-header-cell *matHeaderCellDef class="table-header">
-                            <div class="header-content">
-                                <span>Expedientes</span>
-                                <fa-icon [icon]="faSort" class="sort-icon"></fa-icon>
-                            </div>
+                            <span>Expedientes</span>
                         </th>
                         <td mat-cell *matCellDef="let caja" class="table-cell">
                             <div class="cell-content">
                                 <div class="expedientes-count">
                                     <fa-icon [icon]="faFolder" class="expedientes-icon"></fa-icon>
-                                    <span>{{ caja.expedientes?.length || 0 }}</span>
+                                    <span>{{ caja.expedientesCount || 0 }}</span>
                                 </div>
                             </div>
                         </td>

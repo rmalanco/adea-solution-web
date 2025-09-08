@@ -7,8 +7,11 @@
         <div class="form-container">
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Estado</mat-label>
-                <input matInput formControlName="estado" placeholder="Ej: ACT, INA" maxlength="3">
-                <mat-hint>Debe tener exactamente 3 caracteres</mat-hint>
+                <mat-select formControlName="estado">
+                    <mat-option value="ACT">ACT - Activo</mat-option>
+                    <mat-option value="INA">INA - Inactivo</mat-option>
+                </mat-select>
+                <mat-hint>Selecciona el estado de la caja</mat-hint>
                 <mat-error *ngIf="cajaForm.get('estado')?.invalid && cajaForm.get('estado')?.touched">
                     {{ getErrorMessage('estado') }}
                 </mat-error>

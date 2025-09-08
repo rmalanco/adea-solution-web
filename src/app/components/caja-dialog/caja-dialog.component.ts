@@ -46,7 +46,7 @@ export class CajaDialogComponent implements OnInit {
   ) {
     this.isEditMode = data.mode === 'edit';
     this.cajaForm = this.fb.group({
-      estado: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
+      estado: ['', Validators.required],
       ubicacion_Id: ['', Validators.required]
     });
   }
@@ -108,10 +108,13 @@ export class CajaDialogComponent implements OnInit {
   getErrorMessage(fieldName: string): string {
     const field = this.cajaForm.get(fieldName);
     if (field?.hasError('required')) {
+      if (fieldName === 'estado') {
+        return 'Debe seleccionar un estado';
+      }
+      if (fieldName === 'ubicacion_Id') {
+        return 'Debe seleccionar una ubicación';
+      }
       return `${fieldName} es obligatorio`;
-    }
-    if (field?.hasError('minlength') || field?.hasError('maxlength')) {
-      return 'El estado debe tener exactamente 3 caracteres';
     }
     return '';
   }

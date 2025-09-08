@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -15,26 +12,23 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { 
   faBox, faFolder, faPlus, faEdit, faTrash, faEye, faCheckCircle, faTimesCircle,
-  faExclamationTriangle, faMapMarkerAlt, faTable, faSync, faFilter, faSort,
-  faThLarge, faList, faDownload, faSearch
+  faExclamationTriangle, faMapMarkerAlt, faTable
 } from '@fortawesome/free-solid-svg-icons';
 
 import { ApiService } from '../../services/api.service';
 import { Caja } from '../../models/caja-expediente.models';
 import { CajaDialogComponent } from '../caja-dialog/caja-dialog.component';
+import { CajaDetailsComponent } from '../caja-details/caja-details.component';
 
 @Component({
   selector: 'app-cajas',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
     MatTableModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
     FontAwesomeModule
@@ -48,7 +42,6 @@ export class CajasComponent implements OnInit {
   loading = false;
 
   // Component properties
-  searchTerm: string = '';
   selectedCaja: Caja | null = null;
   isLoading = false;
   
@@ -64,13 +57,6 @@ export class CajasComponent implements OnInit {
   faExclamationTriangle = faExclamationTriangle;
   faMapMarkerAlt = faMapMarkerAlt;
   faTable = faTable;
-  faSync = faSync;
-  faFilter = faFilter;
-  faSort = faSort;
-  faThLarge = faThLarge;
-  faList = faList;
-  faDownload = faDownload;
-  faSearch = faSearch;
 
   constructor(
     private readonly apiService: ApiService,
@@ -162,8 +148,17 @@ export class CajasComponent implements OnInit {
   }
 
   viewCaja(caja: Caja): void {
-    // Implement view details functionality
-    console.log('Viewing caja:', caja);
+    const dialogRef = this.dialog.open(CajaDetailsComponent, {
+      width: '900px',
+      maxWidth: '90vw',
+      maxHeight: '90vh',
+      data: caja,
+      disableClose: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // No action needed after closing details dialog
+    });
   }
 
 }

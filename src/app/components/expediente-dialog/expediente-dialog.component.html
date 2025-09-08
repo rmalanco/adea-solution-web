@@ -19,7 +19,7 @@
 
             <mat-form-field appearance="outline" class="full-width">
                 <mat-label>Nombre del Empleado</mat-label>
-                <input matInput formControlName="nombre_Empleado" placeholder="Ej: Juan Pérez" maxlength="100">
+                <input matInput formControlName="nombre_Empleado" placeholder=" Ej: Juan Pérez" maxlength="100">
                 <mat-hint>Máximo 100 caracteres</mat-hint>
                 <mat-error
                     *ngIf="expedienteForm.get('nombre_Empleado')?.invalid && expedienteForm.get('nombre_Empleado')?.touched">
