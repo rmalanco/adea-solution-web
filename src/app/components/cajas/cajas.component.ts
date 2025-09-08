@@ -19,6 +19,7 @@ import { ApiService } from '../../services/api.service';
 import { Caja } from '../../models/caja-expediente.models';
 import { CajaDialogComponent } from '../caja-dialog/caja-dialog.component';
 import { CajaDetailsComponent } from '../caja-details/caja-details.component';
+import { ConfirmDialogComponent, ConfirmDialogData } from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-cajas',
@@ -110,18 +111,34 @@ export class CajasComponent implements OnInit {
   }
 
   deleteCaja(caja: Caja): void {
-    if (confirm(`¿Está seguro de eliminar la caja ${caja.caja_Id}?`)) {
-      this.apiService.deleteCaja(caja.caja_Id).subscribe({
-        next: () => {
-          this.snackBar.open('Caja eliminada exitosamente', 'Cerrar', { duration: 3000 });
-          this.loadCajas();
-        },
-        error: (error) => {
-          console.error('Error deleting caja:', error);
-          this.snackBar.open(error.error || 'Error al eliminar la caja', 'Cerrar', { duration: 3000 });
-        }
-      });
-    }
+    const dialogData: ConfirmDialogData = {
+      title: 'Confirmar Eliminación',
+      message: `¿Está seguro de eliminar la caja #${caja.caja_Id}? Esta acción no se puede deshacer.`,
+      confirmText: 'Eliminar',
+      cancelText: 'Cancelar',
+      type: 'danger'
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '500px',
+      maxWidth: '90vw',
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.apiService.deleteCaja(caja.caja_Id).subscribe({
+          next: () => {
+            this.snackBar.open('Caja eliminada exitosamente', 'Cerrar', { duration: 3000 });
+            this.loadCajas();
+          },
+          error: (error) => {
+            console.error('Error deleting caja:', error);
+            this.snackBar.open(error.error || 'Error al eliminar la caja', 'Cerrar', { duration: 3000 });
+          }
+        });
+      }
+    });
   }
 
   viewExpedientes(caja: Caja): void {

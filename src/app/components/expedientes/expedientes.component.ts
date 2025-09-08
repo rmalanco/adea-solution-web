@@ -15,6 +15,8 @@ import { faBox, faFolder, faPlus, faEdit, faTrash, faEye, faUser, faFileAlt, faT
 import { ApiService } from '../../services/api.service';
 import { Expediente, Caja } from '../../models/caja-expediente.models';
 import { ExpedienteDialogComponent } from '../expediente-dialog/expediente-dialog.component';
+import { ConfirmDialogComponent, ConfirmDialogData } from '../confirm-dialog/confirm-dialog.component';
+import { ExpedienteDetailsComponent } from '../expediente-details/expediente-details.component';
 
 @Component({
   selector: 'app-expedientes',
@@ -141,19 +143,35 @@ export class ExpedientesComponent implements OnInit {
   }
 
   deleteExpediente(expediente: Expediente): void {
-    if (confirm(`¿Está seguro de eliminar el expediente ${expediente.expediente_Id}?`)) {
-      this.apiService.deleteExpediente(expediente.expediente_Id).subscribe({
-        next: () => {
-          this.snackBar.open('Expediente eliminado exitosamente', 'Cerrar', { duration: 3000 });
-          this.loadExpedientes();
-          this.loadCajas(); // Recargar cajas para actualizar conteos
-        },
-        error: (error) => {
-          console.error('Error deleting expediente:', error);
-          this.snackBar.open(error.error || 'Error al eliminar el expediente', 'Cerrar', { duration: 3000 });
-        }
-      });
-    }
+    const dialogData: ConfirmDialogData = {
+      title: 'Confirmar Eliminación',
+      message: `¿Está seguro de eliminar el expediente #${expediente.expediente_Id}? Esta acción no se puede deshacer.`,
+      confirmText: 'Eliminar',
+      cancelText: 'Cancelar',
+      type: 'danger'
+    };
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '500px',
+      maxWidth: '90vw',
+      data: dialogData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.apiService.deleteExpediente(expediente.expediente_Id).subscribe({
+          next: () => {
+            this.snackBar.open('Expediente eliminado exitosamente', 'Cerrar', { duration: 3000 });
+            this.loadExpedientes();
+            this.loadCajas(); // Recargar cajas para actualizar conteos
+          },
+          error: (error) => {
+            console.error('Error deleting expediente:', error);
+            this.snackBar.open(error.error || 'Error al eliminar el expediente', 'Cerrar', { duration: 3000 });
+          }
+        });
+      }
+    });
   }
 
   getCajaInfo(cajaId: number): Caja | undefined {
@@ -179,7 +197,18 @@ export class ExpedientesComponent implements OnInit {
   }
 
   viewExpediente(expediente: Expediente): void {
-    // Implement view details functionality
-    console.log('Viewing expediente:', expediente);
+    const dialogRef = this.dialog.open(ExpedienteDetailsComponent, {
+      width: '900px',
+      maxWidth: '90vw',
+      maxHeight: '90vh',
+      data: expediente,
+      disableClose: false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result.action === 'edit') {
+        this.openEditDialog(result.expediente);
+      }
+    });
   }
 }
