@@ -1,13 +1,149 @@
 .container {
-  padding: 20px;
-  max-width: 1200px;
+  padding: 24px;
+  max-width: 1400px;
   margin: 0 auto;
 }
 
-.actions {
-  margin-bottom: 20px;
+/* Dashboard Stats */
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border: 1px solid #e0e0e0;
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 16px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #1976d2, #1565c0);
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  transition: all 0.3s ease;
+}
+
+.stat-icon.active {
+  background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+}
+
+.stat-icon.inactive {
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+}
+
+.stat-icon.expedientes {
+  background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+}
+
+.stat-icon fa-icon {
+  font-size: 24px;
+  color: #1976d2;
+}
+
+.stat-icon.active fa-icon {
+  color: #2e7d32;
+}
+
+.stat-icon.inactive fa-icon {
+  color: #d32f2f;
+}
+
+.stat-icon.expedientes fa-icon {
+  color: #7b1fa2;
+}
+
+.stat-content h3 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  line-height: 1;
+  font-family: 'Inter', sans-serif !important;
+  letter-spacing: -0.025em;
+}
+
+.stat-content p {
+  font-size: 14px;
+  color: #666;
+  margin: 4px 0 0 0;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Main Card */
+.main-card {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-bottom: 1px solid #e0e0e0;
+  padding: 0;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+  width: 100%;
+}
+
+.title-section {
+  flex: 1;
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.create-button {
+  border-radius: 12px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.5px;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+}
+
+.create-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(25, 118, 210, 0.4);
 }
 
 .loading {
@@ -15,8 +151,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px;
-  gap: 16px;
+  padding: 60px;
+  gap: 20px;
+}
+
+.loading p {
+  color: #666;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .no-data {
@@ -24,49 +166,75 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px;
-  gap: 16px;
+  padding: 60px;
+  gap: 20px;
   color: #666;
 }
 
-.no-data mat-icon {
-  font-size: 48px;
-  width: 48px;
-  height: 48px;
+.no-data fa-icon {
+  color: #ccc;
+  opacity: 0.7;
+}
+
+.no-data p {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
 }
 
 .table-container {
   overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 table {
   width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .estado-badge {
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   background-color: #f5f5f5;
   color: #666;
+  border: 1px solid #e0e0e0;
 }
 
 .estado-badge.activo {
-  background-color: #e8f5e8;
+  background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
   color: #2e7d32;
+  border-color: #a5d6a7;
 }
 
 .expedientes-count {
-  font-weight: 500;
-  padding: 4px 8px;
-  border-radius: 4px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
   background-color: #f5f5f5;
   color: #666;
+  border: 1px solid #e0e0e0;
+  font-size: 14px;
 }
 
 .expedientes-count.has-expedientes {
-  background-color: #e3f2fd;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
   color: #1976d2;
+  border-color: #90caf9;
+}
+
+.mat-mdc-icon-button {
+  transition: all 0.2s ease;
+  border-radius: 8px;
+}
+
+.mat-mdc-icon-button:hover {
+  transform: scale(1.1);
 }
 
 .mat-mdc-icon-button[disabled] {
@@ -74,21 +242,75 @@ table {
 }
 
 .mat-mdc-card {
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
 }
 
 .mat-mdc-card-header {
-  background-color: #fafafa;
+  background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
   border-bottom: 1px solid #e0e0e0;
+  padding: 24px;
 }
 
 .mat-mdc-card-title {
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 28px;
+  font-weight: 600;
   color: #333;
+  margin: 0;
+  font-family: 'Inter', sans-serif !important;
+  letter-spacing: -0.025em;
 }
 
 .mat-mdc-card-subtitle {
   color: #666;
-  margin-top: 4px;
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.mat-mdc-card-content {
+  padding: 24px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard-stats {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  
+  .stat-content h3 {
+    font-size: 24px;
+  }
+}
+
+/* Mejoras para la tabla */
+.mat-mdc-table {
+  background: white;
+}
+
+.mat-mdc-header-cell {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.mat-mdc-cell {
+  font-size: 14px;
+  padding: 16px;
+}
+
+.mat-mdc-row:hover {
+  background-color: #f8f9fa;
 }

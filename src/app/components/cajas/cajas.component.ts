@@ -8,6 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faBox, faFolder, faPlus, faEdit, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
 
 import { ApiService } from '../../services/api.service';
 import { Caja } from '../../models/caja-expediente.models';
@@ -23,7 +25,8 @@ import { CajaDialogComponent } from '../caja-dialog/caja-dialog.component';
     MatIconModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    FontAwesomeModule
   ],
   templateUrl: './cajas.component.html',
   styleUrl: './cajas.component.css'
@@ -33,10 +36,18 @@ export class CajasComponent implements OnInit {
   displayedColumns: string[] = ['caja_Id', 'estado', 'ubicacion_Id', 'expedientesCount', 'actions'];
   loading = false;
 
+  // Font Awesome icons
+  faBox = faBox;
+  faFolder = faFolder;
+  faPlus = faPlus;
+  faEdit = faEdit;
+  faTrash = faTrash;
+  faEye = faEye;
+
   constructor(
-    private apiService: ApiService,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private readonly apiService: ApiService,
+    private readonly dialog: MatDialog,
+    private readonly snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -103,5 +114,17 @@ export class CajasComponent implements OnInit {
     // Navegar a expedientes con filtro por caja
     // Esto se implementará cuando creemos el componente de expedientes
     console.log('Ver expedientes de caja:', caja.caja_Id);
+  }
+
+  getActiveCajasCount(): number {
+    return this.cajas.filter(caja => caja.estado === 'ACT').length;
+  }
+
+  getInactiveCajasCount(): number {
+    return this.cajas.filter(caja => caja.estado === 'INA').length;
+  }
+
+  getTotalExpedientesCount(): number {
+    return this.cajas.reduce((total, caja) => total + caja.expedientesCount, 0);
   }
 }

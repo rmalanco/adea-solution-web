@@ -1,25 +1,68 @@
 <div class="container">
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Gestión de Cajas</mat-card-title>
-            <mat-card-subtitle>Administra las cajas del sistema</mat-card-subtitle>
+    <!-- Dashboard Stats -->
+    <div class="dashboard-stats">
+        <div class="stat-card">
+            <div class="stat-icon">
+                <fa-icon [icon]="faBox"></fa-icon>
+            </div>
+            <div class="stat-content">
+                <h3>{{ cajas.length }}</h3>
+                <p>Total Cajas</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon active">
+                <fa-icon [icon]="faBox"></fa-icon>
+            </div>
+            <div class="stat-content">
+                <h3>{{ getActiveCajasCount() }}</h3>
+                <p>Cajas Activas</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon inactive">
+                <fa-icon [icon]="faBox"></fa-icon>
+            </div>
+            <div class="stat-content">
+                <h3>{{ getInactiveCajasCount() }}</h3>
+                <p>Cajas Inactivas</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon expedientes">
+                <fa-icon [icon]="faFolder"></fa-icon>
+            </div>
+            <div class="stat-content">
+                <h3>{{ getTotalExpedientesCount() }}</h3>
+                <p>Total Expedientes</p>
+            </div>
+        </div>
+    </div>
+
+    <mat-card class="main-card">
+        <mat-card-header class="card-header">
+            <div class="header-content">
+                <div class="title-section">
+                    <mat-card-title>Gestión de Cajas</mat-card-title>
+                    <mat-card-subtitle>Administra las cajas del sistema</mat-card-subtitle>
+                </div>
+                <div class="header-actions">
+                    <button mat-raised-button color="primary" (click)="openCreateDialog()" class="create-button">
+                        <fa-icon [icon]="faPlus"></fa-icon>
+                        Nueva Caja
+                    </button>
+                </div>
+            </div>
         </mat-card-header>
 
         <mat-card-content>
-            <div class="actions">
-                <button mat-raised-button color="primary" (click)="openCreateDialog()">
-                    <mat-icon>add</mat-icon>
-                    Nueva Caja
-                </button>
-            </div>
-
             <div *ngIf="loading" class="loading">
                 <mat-spinner diameter="50"></mat-spinner>
                 <p>Cargando cajas...</p>
             </div>
 
             <div *ngIf="!loading && cajas.length === 0" class="no-data">
-                <mat-icon>inbox</mat-icon>
+                <fa-icon [icon]="faBox" size="3x"></fa-icon>
                 <p>No hay cajas registradas</p>
             </div>
 
@@ -63,14 +106,14 @@
                         <td mat-cell *matCellDef="let caja">
                             <button mat-icon-button (click)="viewExpedientes(caja)" matTooltip="Ver Expedientes"
                                 color="primary">
-                                <mat-icon>folder_open</mat-icon>
+                                <fa-icon [icon]="faEye"></fa-icon>
                             </button>
                             <button mat-icon-button (click)="openEditDialog(caja)" matTooltip="Editar" color="accent">
-                                <mat-icon>edit</mat-icon>
+                                <fa-icon [icon]="faEdit"></fa-icon>
                             </button>
                             <button mat-icon-button (click)="deleteCaja(caja)" matTooltip="Eliminar" color="warn"
                                 [disabled]="caja.expedientesCount > 0">
-                                <mat-icon>delete</mat-icon>
+                                <fa-icon [icon]="faTrash"></fa-icon>
                             </button>
                         </td>
                     </ng-container>

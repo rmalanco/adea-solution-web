@@ -9,6 +9,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faBox, faFolder, faPlus, faEdit, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
 
 import { ApiService } from '../../services/api.service';
 import { Expediente, Caja } from '../../models/caja-expediente.models';
@@ -25,7 +27,8 @@ import { ExpedienteDialogComponent } from '../expediente-dialog/expediente-dialo
     MatCardModule,
     MatProgressSpinnerModule,
     MatChipsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    FontAwesomeModule
   ],
   templateUrl: './expedientes.component.html',
   styleUrl: './expedientes.component.css'
@@ -37,10 +40,18 @@ export class ExpedientesComponent implements OnInit {
   loading = false;
   selectedCajaId: number | null = null;
 
+  // Font Awesome icons
+  faBox = faBox;
+  faFolder = faFolder;
+  faPlus = faPlus;
+  faEdit = faEdit;
+  faTrash = faTrash;
+  faEye = faEye;
+
   constructor(
-    private apiService: ApiService,
-    private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private readonly apiService: ApiService,
+    private readonly dialog: MatDialog,
+    private readonly snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -150,5 +161,9 @@ export class ExpedientesComponent implements OnInit {
       case 'Guarda': return 'warn';
       default: return 'primary';
     }
+  }
+
+  getExpedientesByType(tipo: string): Expediente[] {
+    return this.expedientes.filter(expediente => expediente.tipo_Expediente === tipo);
   }
 }
