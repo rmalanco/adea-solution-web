@@ -1,40 +1,52 @@
-<div class="caja-dialog-container">
+<div class="caja-dialog-container" [attr.aria-label]="isEditMode ? 'Editar información de caja' : 'Crear nueva caja'"
+    role="dialog" aria-modal="true">
+
+    <!-- Dialog Header -->
     <div class="dialog-header">
         <div class="header-content">
             <div class="title-section">
-                <fa-icon [icon]="faBox" class="title-icon"></fa-icon>
-                <h2 mat-dialog-title>{{ isEditMode ? 'Editar Caja' : 'Nueva Caja' }}</h2>
+                <fa-icon [icon]="faBox" class="title-icon" aria-hidden="true"></fa-icon>
+                <h2 mat-dialog-title id="dialog-title">{{ isEditMode ? 'Editar Caja' : 'Nueva Caja' }}</h2>
             </div>
-            <button mat-icon-button (click)="onCancel()" class="close-button">
-                <fa-icon [icon]="faTimes"></fa-icon>
+            <button mat-icon-button (click)="onCancel()" class="close-button" aria-label="Cerrar diálogo" type="button">
+                <fa-icon [icon]="faTimes" aria-hidden="true"></fa-icon>
             </button>
         </div>
     </div>
 
+    <!-- Dialog Content -->
     <mat-dialog-content class="dialog-content">
-        <form [formGroup]="cajaForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="cajaForm" (ngSubmit)="onSubmit()" novalidate
+            [attr.aria-label]="isEditMode ? 'Formulario de edición de caja' : 'Formulario de creación de caja'">
             <div class="form-container">
                 <mat-form-field appearance="outline" class="full-width">
                     <mat-label>Estado</mat-label>
-                    <mat-select formControlName="estado">
-                        <mat-option value="ACT">ACT - Activo</mat-option>
-                        <mat-option value="INA">INA - Inactivo</mat-option>
+                    <mat-select formControlName="estado" [attr.aria-describedby]="'estado-hint estado-error'"
+                        aria-required="true">
+                        <mat-option value="ACT" aria-label="Estado activo">ACT - Activo</mat-option>
+                        <mat-option value="INA" aria-label="Estado inactivo">INA - Inactivo</mat-option>
                     </mat-select>
-                    <mat-hint>Selecciona el estado de la caja</mat-hint>
-                    <mat-error *ngIf="cajaForm.get('estado')?.invalid && cajaForm.get('estado')?.touched">
+                    <mat-hint id="estado-hint">Selecciona el estado de la caja</mat-hint>
+                    <mat-error id="estado-error"
+                        *ngIf="cajaForm.get('estado')?.invalid && cajaForm.get('estado')?.touched" role="alert"
+                        aria-live="polite">
                         {{ getErrorMessage('estado') }}
                     </mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" class="full-width">
                     <mat-label>Ubicación</mat-label>
-                    <mat-select formControlName="ubicacion_Id">
-                        <mat-option *ngFor="let ubicacion of ubicaciones" [value]="ubicacion">
+                    <mat-select formControlName="ubicacion_Id"
+                        [attr.aria-describedby]="'ubicacion-hint ubicacion-error'" aria-required="true">
+                        <mat-option *ngFor="let ubicacion of ubicaciones" [value]="ubicacion"
+                            [attr.aria-label]="'Ubicación: ' + ubicacion">
                             {{ ubicacion }}
                         </mat-option>
                     </mat-select>
-                    <mat-hint>Selecciona la ubicación de la caja</mat-hint>
-                    <mat-error *ngIf="cajaForm.get('ubicacion_Id')?.invalid && cajaForm.get('ubicacion_Id')?.touched">
+                    <mat-hint id="ubicacion-hint">Selecciona la ubicación de la caja</mat-hint>
+                    <mat-error id="ubicacion-error"
+                        *ngIf="cajaForm.get('ubicacion_Id')?.invalid && cajaForm.get('ubicacion_Id')?.touched"
+                        role="alert" aria-live="polite">
                         {{ getErrorMessage('ubicacion_Id') }}
                     </mat-error>
                 </mat-form-field>
@@ -42,13 +54,16 @@
         </form>
     </mat-dialog-content>
 
-    <mat-dialog-actions class="dialog-actions">
-        <button mat-button (click)="onCancel()" class="cancel-button">
+    <!-- Dialog Actions -->
+    <mat-dialog-actions class="dialog-actions" align="end">
+        <button mat-button (click)="onCancel()" class="cancel-button" aria-label="Cancelar y cerrar diálogo"
+            type="button">
             Cancelar
         </button>
         <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="cajaForm.invalid"
-            class="submit-button">
-            <fa-icon [icon]="isEditMode ? faEdit : faPlus" class="button-icon"></fa-icon>
+            class="submit-button" [attr.aria-label]="isEditMode ? 'Actualizar información de caja' : 'Crear nueva caja'"
+            cdkFocusInitial type="submit">
+            <fa-icon [icon]="isEditMode ? faEdit : faPlus" class="button-icon" aria-hidden="true"></fa-icon>
             {{ isEditMode ? 'Actualizar' : 'Crear' }}
         </button>
     </mat-dialog-actions>

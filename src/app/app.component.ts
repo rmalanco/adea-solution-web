@@ -7,8 +7,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { 
-  faBox, faFolder, faPlus, faEdit, faTrash, faEye, faBars, faSun, faMoon, faUser,
-  faDatabase, faChartBar, faCog, faChevronRight, faBell, faSearch, faEllipsisV
+  faBox, faFolder, faPlus, faEdit, faTrash, faEye, faBars,
+  faDatabase, faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -29,7 +29,6 @@ import {
 })
 export class AppComponent {
   title = 'ADEA Solution - Gestión de Cajas y Expedientes';
-  isDarkTheme = false;
   
   // Font Awesome icons
   faBox = faBox;
@@ -39,20 +38,6 @@ export class AppComponent {
   faTrash = faTrash;
   faEye = faEye;
   faBars = faBars;
-  faSun = faSun;
-  faMoon = faMoon;
-  faUser = faUser;
   faDatabase = faDatabase;
-  faChartBar = faChartBar;
-  faCog = faCog;
   faChevronRight = faChevronRight;
-  faBell = faBell;
-  faSearch = faSearch;
-  faEllipsisV = faEllipsisV;
-
-  toggleTheme(): void {
-    this.isDarkTheme = !this.isDarkTheme;
-    // Aquí podrías implementar la lógica para cambiar el tema
-    console.log('Theme toggled:', this.isDarkTheme ? 'Dark' : 'Light');
-  }
 }

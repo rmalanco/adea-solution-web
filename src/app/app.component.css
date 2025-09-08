@@ -182,65 +182,6 @@
   opacity: 1;
 }
 
-/* Sidebar Footer */
-.sidebar-footer {
-  padding: var(--space-4);
-  border-top: 1px solid var(--surface-2);
-  background: var(--surface-1);
-}
-
-.user-card {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3);
-  border-radius: var(--radius-lg);
-  background: var(--surface-0);
-  border: 1px solid var(--surface-2);
-  transition: all var(--transition-base);
-}
-
-.user-card:hover {
-  box-shadow: var(--elevation-2);
-}
-
-.user-avatar {
-  width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, var(--accent-400), var(--accent-600));
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-on-primary);
-  font-size: 1.125rem;
-}
-
-.user-info {
-  flex: 1;
-}
-
-.user-name {
-  display: block;
-  font-size: 0.875rem;
-  font-weight: var(--font-weight-medium);
-  color: var(--text-primary);
-  font-family: 'Inter', sans-serif !important;
-}
-
-.user-role {
-  display: block;
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  font-family: 'Inter', sans-serif !important;
-}
-
-.user-menu-btn {
-  width: 32px !important;
-  height: 32px !important;
-  min-width: 32px !important;
-  color: var(--text-secondary) !important;
-}
 
 /* Main Content */
 .main-content {
@@ -301,36 +242,6 @@
   color: var(--text-disabled);
 }
 
-.toolbar-action {
-  width: 40px !important;
-  height: 40px !important;
-  min-width: 40px !important;
-  color: var(--text-secondary) !important;
-  position: relative;
-  border-radius: var(--radius-lg) !important;
-  transition: all var(--transition-base) !important;
-}
-
-.toolbar-action:hover {
-  background: var(--surface-2) !important;
-  color: var(--text-primary) !important;
-}
-
-.notification-badge {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  background: var(--error-color);
-  color: var(--text-on-primary);
-  font-size: 0.625rem;
-  font-weight: var(--font-weight-semibold);
-  padding: 2px 6px;
-  border-radius: var(--radius-full);
-  line-height: 1;
-  min-width: 16px;
-  text-align: center;
-  font-family: 'Inter', sans-serif !important;
-}
 
 /* Page Content */
 .page-content {
@@ -380,10 +291,6 @@
   .modern-sidenav {
     width: 100%;
   }
-  
-  .toolbar-right .toolbar-action:not(:last-child) {
-    display: none;
-  }
 }
 
 /* Smooth Animations */
@@ -393,9 +300,7 @@
 }
 
 /* Focus States */
-.nav-item:focus,
-.toolbar-action:focus,
-.user-menu-btn:focus {
+.nav-item:focus {
   outline: 2px solid var(--primary-500);
   outline-offset: 2px;
 }

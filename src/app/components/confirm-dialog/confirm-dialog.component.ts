@@ -1,9 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faExclamationTriangle, faTimes, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faExclamationTriangle, faTimes, faTrash, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 export interface ConfirmDialogData {
   title: string;
@@ -11,6 +12,8 @@ export interface ConfirmDialogData {
   confirmText?: string;
   cancelText?: string;
   type?: 'warning' | 'danger' | 'info';
+  ariaLabel?: string;
+  ariaDescribedBy?: string;
 }
 
 @Component({
@@ -20,37 +23,64 @@ export interface ConfirmDialogData {
     CommonModule,
     MatDialogModule,
     MatButtonModule,
+    MatIconModule,
     FontAwesomeModule
   ],
   template: `
-    <div class="confirm-dialog-container">
+    <div class="confirm-dialog-container" 
+         [attr.aria-label]="data.ariaLabel || data.title"
+         [attr.aria-describedby]="data.ariaDescribedBy || 'dialog-message'"
+         role="dialog"
+         aria-modal="true">
+      
+      <!-- Dialog Header -->
       <div class="dialog-header" [class]="'header-' + (data.type || 'warning')">
         <div class="header-content">
           <div class="title-section">
-            <fa-icon [icon]="getIcon()" class="title-icon"></fa-icon>
-            <h2 mat-dialog-title>{{ data.title }}</h2>
+            <fa-icon [icon]="getIcon()" class="title-icon" aria-hidden="true"></fa-icon>
+            <h2 mat-dialog-title id="dialog-title">{{ data.title }}</h2>
           </div>
-          <button mat-icon-button (click)="onCancel()" class="close-button">
-            <fa-icon [icon]="faTimes"></fa-icon>
+          <button mat-icon-button 
+                  (click)="onCancel()" 
+                  class="close-button"
+                  aria-label="Cerrar diálogo"
+                  type="button">
+            <fa-icon [icon]="faTimes" aria-hidden="true"></fa-icon>
           </button>
         </div>
       </div>
 
-      <div class="dialog-content">
+      <!-- Dialog Content -->
+      <mat-dialog-content class="dialog-content">
         <div class="message-container">
-          <p class="confirmation-message">{{ data.message }}</p>
+          <p class="confirmation-message" 
+             id="dialog-message"
+             [attr.aria-live]="'polite'">
+            {{ data.message }}
+          </p>
         </div>
-      </div>
+      </mat-dialog-content>
 
-      <div class="dialog-actions">
-        <button mat-button (click)="onCancel()" class="cancel-button">
+      <!-- Dialog Actions -->
+      <mat-dialog-actions class="dialog-actions" align="end">
+        <button mat-button 
+                (click)="onCancel()" 
+                class="cancel-button"
+                [attr.aria-label]="data.cancelText || 'Cancelar acción'"
+                type="button">
           {{ data.cancelText || 'Cancelar' }}
         </button>
-        <button mat-raised-button (click)="onConfirm()" class="confirm-button" [class]="'confirm-' + (data.type || 'warning')">
-          <fa-icon [icon]="faTrash" class="button-icon"></fa-icon>
-          {{ data.confirmText || 'Eliminar' }}
+        <button mat-raised-button 
+                (click)="onConfirm()" 
+                class="confirm-button" 
+                [class]="'confirm-' + (data.type || 'warning')"
+                [attr.aria-label]="data.confirmText || 'Confirmar acción'"
+                cdkFocusInitial
+                type="button">
+          <fa-icon [icon]="getConfirmIcon()" class="button-icon" aria-hidden="true"></fa-icon>
+          {{ data.confirmText || 'Confirmar' }}
         </button>
-      </div>
+      </mat-dialog-actions>
     </div>
   `,
   styles: [`
@@ -58,6 +88,7 @@ export interface ConfirmDialogData {
       max-width: 500px;
       width: 100%;
       margin: 0 auto;
+      outline: none;
     }
 
     .dialog-header {
@@ -120,6 +151,10 @@ export interface ConfirmDialogData {
       transform: translateY(-50%);
     }
 
+    .close-button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
     .dialog-content {
       padding: 24px 16px;
       margin: 0;
@@ -152,6 +187,12 @@ export interface ConfirmDialogData {
       border-radius: 8px;
       padding: 8px 16px;
       font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .cancel-button:hover {
+      background-color: #e0e0e0;
+      transform: translateY(-1px);
     }
 
     .confirm-button {
@@ -183,9 +224,47 @@ export interface ConfirmDialogData {
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
 
+    .confirm-button:focus {
+      outline: 2px solid #2196f3;
+      outline-offset: 2px;
+    }
+
     .button-icon {
       margin-right: 8px;
       font-size: 16px;
+    }
+
+    /* Focus management */
+    .confirm-dialog-container:focus {
+      outline: none;
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+      .dialog-header {
+        border: 2px solid currentColor;
+      }
+      
+      .confirm-button {
+        border: 2px solid currentColor;
+      }
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      .confirm-button,
+      .cancel-button,
+      .close-button {
+        transition: none;
+      }
+      
+      .confirm-button:hover:not(:disabled) {
+        transform: none;
+      }
+      
+      .cancel-button:hover {
+        transform: none;
+      }
     }
 
     /* Responsive Design */
@@ -238,27 +317,78 @@ export interface ConfirmDialogData {
         width: 100%;
       }
     }
+
+    /* Extra small screens */
+    @media (max-width: 480px) {
+      .dialog-header {
+        padding: 16px 12px;
+      }
+      
+      h2 {
+        font-size: 22px;
+      }
+      
+      .title-icon {
+        font-size: 24px;
+      }
+      
+      .confirmation-message {
+        font-size: 15px;
+      }
+    }
   `]
 })
-export class ConfirmDialogComponent {
+export class ConfirmDialogComponent implements OnInit {
   faExclamationTriangle = faExclamationTriangle;
   faTimes = faTimes;
   faTrash = faTrash;
+  faInfoCircle = faInfoCircle;
 
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData
   ) {}
 
+  ngOnInit(): void {
+    // Set default ARIA attributes if not provided
+    if (!this.data.ariaLabel) {
+      this.data.ariaLabel = this.data.title;
+    }
+    if (!this.data.ariaDescribedBy) {
+      this.data.ariaDescribedBy = 'dialog-message';
+    }
+  }
+
   getIcon() {
     switch (this.data.type) {
       case 'danger':
         return faTrash;
       case 'info':
-        return faExclamationTriangle;
+        return faInfoCircle;
       default:
         return faExclamationTriangle;
     }
+  }
+
+  getConfirmIcon() {
+    switch (this.data.type) {
+      case 'danger':
+        return faTrash;
+      case 'info':
+        return faInfoCircle;
+      default:
+        return faExclamationTriangle;
+    }
+  }
+
+  @HostListener('keydown.escape')
+  onEscapeKey(): void {
+    this.onCancel();
+  }
+
+  @HostListener('keydown.enter')
+  onEnterKey(): void {
+    this.onConfirm();
   }
 
   onCancel(): void {

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
@@ -66,6 +66,19 @@ export class CajaDialogComponent implements OnInit {
         estado: this.data.caja.estado,
         ubicacion_Id: this.data.caja.ubicacion_Id
       });
+    }
+  }
+
+  @HostListener('keydown.escape')
+  onEscapeKey(): void {
+    this.onCancel();
+  }
+
+  @HostListener('keydown.enter', ['$event'])
+  onEnterKey(event: KeyboardEvent): void {
+    if (this.cajaForm.valid && !event.shiftKey) {
+      event.preventDefault();
+      this.onSubmit();
     }
   }
 
