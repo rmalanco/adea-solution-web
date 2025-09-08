@@ -8,7 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { 
   faBox, faFolder, faPlus, faEdit, faTrash, faEye, faBars,
-  faDatabase, faChevronRight
+  faDatabase, faChevronRight, faDownload
 } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -40,4 +40,5 @@ export class AppComponent {
   faBars = faBars;
   faDatabase = faDatabase;
   faChevronRight = faChevronRight;
+  faDownload = faDownload;
 }

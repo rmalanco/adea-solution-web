@@ -182,6 +182,83 @@
   opacity: 1;
 }
 
+/* Download Section */
+.download-section {
+  padding: var(--space-4) var(--space-3);
+  border-top: 1px solid var(--surface-2);
+  background: linear-gradient(135deg, var(--surface-0) 0%, var(--surface-1) 100%);
+}
+
+.download-link {
+  display: flex;
+  align-items: center;
+  padding: var(--space-4);
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  color: var(--text-on-primary);
+  transition: all var(--transition-base);
+  box-shadow: var(--elevation-2);
+  position: relative;
+  overflow: hidden;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.download-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.download-link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--elevation-4);
+  background: linear-gradient(135deg, var(--primary-600), var(--primary-800));
+}
+
+.download-link:hover::before {
+  left: 100%;
+}
+
+.download-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: var(--space-3);
+  font-size: 1.25rem;
+  backdrop-filter: blur(10px);
+}
+
+.download-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.download-title {
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.2;
+  font-family: 'Inter', sans-serif !important;
+}
+
+.download-subtitle {
+  font-size: 0.75rem;
+  opacity: 0.9;
+  font-weight: var(--font-weight-medium);
+  font-family: 'Inter', sans-serif !important;
+}
+
 
 /* Main Content */
 .main-content {
@@ -284,6 +361,20 @@
   
   .breadcrumb {
     display: none;
+  }
+  
+  .download-section {
+    padding: var(--space-3) var(--space-2);
+  }
+  
+  .download-link {
+    padding: var(--space-3);
+  }
+  
+  .download-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 1.125rem;
   }
 }
 
