@@ -1,51 +1,67 @@
-<h2 mat-dialog-title>
-    {{ isEditMode ? 'Editar Expediente' : 'Nuevo Expediente' }}
-</h2>
-
-<mat-dialog-content>
-    <form [formGroup]="expedienteForm" (ngSubmit)="onSubmit()">
-        <div class="form-container">
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Caja</mat-label>
-                <mat-select formControlName="caja_Id">
-                    <mat-option *ngFor="let caja of data.cajas" [value]="caja.caja_Id">
-                        {{ getCajaDisplayText(caja) }}
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="expedienteForm.get('caja_Id')?.invalid && expedienteForm.get('caja_Id')?.touched">
-                    {{ getErrorMessage('caja_Id') }}
-                </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Nombre del Empleado</mat-label>
-                <input matInput formControlName="nombre_Empleado" placeholder=" Ej: Juan Pérez" maxlength="100">
-                <mat-hint>Máximo 100 caracteres</mat-hint>
-                <mat-error
-                    *ngIf="expedienteForm.get('nombre_Empleado')?.invalid && expedienteForm.get('nombre_Empleado')?.touched">
-                    {{ getErrorMessage('nombre_Empleado') }}
-                </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Tipo de Expediente</mat-label>
-                <mat-select formControlName="tipo_Expediente">
-                    <mat-option *ngFor="let tipo of tiposExpediente" [value]="tipo">
-                        {{ tipo }}
-                    </mat-option>
-                </mat-select>
-                <mat-error
-                    *ngIf="expedienteForm.get('tipo_Expediente')?.invalid && expedienteForm.get('tipo_Expediente')?.touched">
-                    {{ getErrorMessage('tipo_Expediente') }}
-                </mat-error>
-            </mat-form-field>
+<div class="expediente-dialog-container">
+    <div class="dialog-header">
+        <div class="header-content">
+            <div class="title-section">
+                <fa-icon [icon]="faFolder" class="title-icon"></fa-icon>
+                <h2 mat-dialog-title>{{ isEditMode ? 'Editar Expediente' : 'Nuevo Expediente' }}</h2>
+            </div>
+            <button mat-icon-button (click)="onCancel()" class="close-button">
+                <fa-icon [icon]="faTimes"></fa-icon>
+            </button>
         </div>
-    </form>
-</mat-dialog-content>
+    </div>
 
-<mat-dialog-actions align="end">
-    <button mat-button (click)="onCancel()">Cancelar</button>
-    <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="expedienteForm.invalid">
-        {{ isEditMode ? 'Actualizar' : 'Crear' }}
-    </button>
-</mat-dialog-actions>
+    <mat-dialog-content class="dialog-content">
+        <form [formGroup]="expedienteForm" (ngSubmit)="onSubmit()">
+            <div class="form-container">
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Caja</mat-label>
+                    <mat-select formControlName="caja_Id">
+                        <mat-option *ngFor="let caja of data.cajas" [value]="caja.caja_Id">
+                            {{ getCajaDisplayText(caja) }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint>Selecciona la caja donde se guardará el expediente</mat-hint>
+                    <mat-error *ngIf="expedienteForm.get('caja_Id')?.invalid && expedienteForm.get('caja_Id')?.touched">
+                        {{ getErrorMessage('caja_Id') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Nombre del Empleado</mat-label>
+                    <input matInput formControlName="nombre_Empleado" placeholder="Ej: Juan Pérez" maxlength="100">
+                    <mat-hint>Máximo 100 caracteres</mat-hint>
+                    <mat-error
+                        *ngIf="expedienteForm.get('nombre_Empleado')?.invalid && expedienteForm.get('nombre_Empleado')?.touched">
+                        {{ getErrorMessage('nombre_Empleado') }}
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>Tipo de Expediente</mat-label>
+                    <mat-select formControlName="tipo_Expediente">
+                        <mat-option *ngFor="let tipo of tiposExpediente" [value]="tipo">
+                            {{ tipo }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint>Selecciona el tipo de expediente</mat-hint>
+                    <mat-error
+                        *ngIf="expedienteForm.get('tipo_Expediente')?.invalid && expedienteForm.get('tipo_Expediente')?.touched">
+                        {{ getErrorMessage('tipo_Expediente') }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions class="dialog-actions">
+        <button mat-button (click)="onCancel()" class="cancel-button">
+            Cancelar
+        </button>
+        <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="expedienteForm.invalid"
+            class="submit-button">
+            <fa-icon [icon]="isEditMode ? faEdit : faPlus" class="button-icon"></fa-icon>
+            {{ isEditMode ? 'Actualizar' : 'Crear' }}
+        </button>
+    </mat-dialog-actions>
+</div>

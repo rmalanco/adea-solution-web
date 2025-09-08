@@ -10,7 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faBox, faFolder, faPlus, faEdit, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faBox, faFolder, faPlus, faEdit, faTrash, faEye, faUser, faFileAlt, faTable } from '@fortawesome/free-solid-svg-icons';
 
 import { ApiService } from '../../services/api.service';
 import { Expediente, Caja } from '../../models/caja-expediente.models';
@@ -40,6 +40,9 @@ export class ExpedientesComponent implements OnInit {
   loading = false;
   selectedCajaId: number | null = null;
 
+  // Component properties
+  selectedExpediente: Expediente | null = null;
+  
   // Font Awesome icons
   faBox = faBox;
   faFolder = faFolder;
@@ -47,6 +50,9 @@ export class ExpedientesComponent implements OnInit {
   faEdit = faEdit;
   faTrash = faTrash;
   faEye = faEye;
+  faUser = faUser;
+  faFileAlt = faFileAlt;
+  faTable = faTable;
 
   constructor(
     private readonly apiService: ApiService,
@@ -165,5 +171,15 @@ export class ExpedientesComponent implements OnInit {
 
   getExpedientesByType(tipo: string): Expediente[] {
     return this.expedientes.filter(expediente => expediente.tipo_Expediente === tipo);
+  }
+
+  // New methods for modern dashboard
+  selectExpediente(expediente: Expediente): void {
+    this.selectedExpediente = this.selectedExpediente === expediente ? null : expediente;
+  }
+
+  viewExpediente(expediente: Expediente): void {
+    // Implement view details functionality
+    console.log('Viewing expediente:', expediente);
   }
 }

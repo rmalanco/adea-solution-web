@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faFolder, faPlus, faEdit, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { ApiService } from '../../services/api.service';
 import { Expediente, CreateExpedienteRequest, UpdateExpedienteRequest, Caja } from '../../models/caja-expediente.models';
@@ -28,7 +30,8 @@ export interface ExpedienteDialogData {
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    FontAwesomeModule
   ],
   templateUrl: './expediente-dialog.component.html',
   styleUrl: './expediente-dialog.component.css'
@@ -37,6 +40,12 @@ export class ExpedienteDialogComponent implements OnInit {
   expedienteForm: FormGroup;
   tiposExpediente = TIPOS_EXPEDIENTE;
   isEditMode = false;
+
+  // Font Awesome icons
+  faFolder = faFolder;
+  faPlus = faPlus;
+  faEdit = faEdit;
+  faTimes = faTimes;
 
   constructor(
     private fb: FormBuilder,

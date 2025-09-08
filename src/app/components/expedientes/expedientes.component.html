@@ -1,138 +1,170 @@
-<div class="container">
-    <!-- Dashboard Stats -->
+<div class="modern-container">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="page-title">
+            <h1>Gestión de Expedientes</h1>
+            <p class="page-subtitle">Administra y controla todos los expedientes del sistema</p>
+        </div>
+        <div class="page-actions">
+            <button mat-raised-button color="primary" class="primary-action" (click)="openCreateDialog()">
+                <fa-icon [icon]="faPlus"></fa-icon>
+                Nuevo Expediente
+            </button>
+        </div>
+    </div>
+
+    <!-- Modern Dashboard Stats -->
     <div class="dashboard-stats">
-        <div class="stat-card">
+        <div class="stat-card primary">
             <div class="stat-icon">
                 <fa-icon [icon]="faFolder"></fa-icon>
             </div>
             <div class="stat-content">
-                <h3>{{ expedientes.length }}</h3>
-                <p>Total Expedientes</p>
+                <div class="stat-value">{{ expedientes.length }}</div>
+                <div class="stat-label">Total de Expedientes</div>
+                <div class="stat-trend positive">Sistema completo</div>
             </div>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon historico">
+
+        <div class="stat-card success">
+            <div class="stat-icon">
                 <fa-icon [icon]="faFolder"></fa-icon>
             </div>
             <div class="stat-content">
-                <h3>{{ getExpedientesByType('Histórico').length }}</h3>
-                <p>Históricos</p>
+                <div class="stat-value">{{ getExpedientesByType('Histórico').length }}</div>
+                <div class="stat-label">Expedientes Históricos</div>
+                <div class="stat-trend positive">{{ expedientes.length > 0 ? ((getExpedientesByType('Histórico').length
+                    / expedientes.length) * 100).toFixed(1) : 0 }}% del total</div>
             </div>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon dia-dia">
+
+        <div class="stat-card warning">
+            <div class="stat-icon">
                 <fa-icon [icon]="faFolder"></fa-icon>
             </div>
             <div class="stat-content">
-                <h3>{{ getExpedientesByType('Día a Día').length }}</h3>
-                <p>Día a Día</p>
+                <div class="stat-value">{{ getExpedientesByType('Día a Día').length }}</div>
+                <div class="stat-label">Día a Día</div>
+                <div class="stat-trend positive">{{ expedientes.length > 0 ? ((getExpedientesByType('Día a Día').length
+                    / expedientes.length) * 100).toFixed(1) : 0 }}% del total</div>
             </div>
         </div>
-        <div class="stat-card">
-            <div class="stat-icon guarda">
+
+        <div class="stat-card info">
+            <div class="stat-icon">
                 <fa-icon [icon]="faFolder"></fa-icon>
             </div>
             <div class="stat-content">
-                <h3>{{ getExpedientesByType('Guarda').length }}</h3>
-                <p>Guarda</p>
+                <div class="stat-value">{{ getExpedientesByType('Guarda').length }}</div>
+                <div class="stat-label">Guarda</div>
+                <div class="stat-trend positive">{{ expedientes.length > 0 ? ((getExpedientesByType('Guarda').length /
+                    expedientes.length) * 100).toFixed(1) : 0 }}% del total</div>
             </div>
         </div>
     </div>
 
-    <mat-card class="main-card">
-        <mat-card-header class="card-header">
-            <div class="header-content">
-                <div class="title-section">
-                    <mat-card-title>Gestión de Expedientes</mat-card-title>
-                    <mat-card-subtitle>Administra los expedientes del sistema</mat-card-subtitle>
-                </div>
-                <div class="header-actions">
-                    <button mat-raised-button color="primary" (click)="openCreateDialog()" class="create-button">
-                        <fa-icon [icon]="faPlus"></fa-icon>
-                        Nuevo Expediente
-                    </button>
+    <!-- Data Table Card -->
+    <mat-card class="data-table-card">
+        <mat-card-header class="modern-card-header">
+            <div class="card-header-content">
+                <div class="card-title-section">
+                    <mat-card-title>
+                        <fa-icon [icon]="faTable" class="title-icon"></fa-icon>
+                        Lista de Expedientes
+                    </mat-card-title>
+                    <mat-card-subtitle>
+                        {{ expedientes.length }} expedientes registrados en el sistema
+                    </mat-card-subtitle>
                 </div>
             </div>
         </mat-card-header>
 
-        <mat-card-content>
-            <div class="filter-section">
-                <mat-chip-set>
-                    <mat-chip [class.selected]="selectedCajaId === null" (click)="filterByCaja(null)">
-                        Todos
-                    </mat-chip>
-                    <mat-chip *ngFor="let caja of cajas" [class.selected]="selectedCajaId === caja.caja_Id"
-                        (click)="filterByCaja(caja.caja_Id)">
-                        Caja {{ caja.caja_Id }} ({{ caja.expedientesCount }})
-                    </mat-chip>
-                </mat-chip-set>
-            </div>
-
-            <div *ngIf="loading" class="loading">
-                <mat-spinner diameter="50"></mat-spinner>
-                <p>Cargando expedientes...</p>
-            </div>
-
-            <div *ngIf="!loading && expedientes.length === 0" class="no-data">
-                <fa-icon [icon]="faFolder" size="3x"></fa-icon>
-                <p>No hay expedientes registrados</p>
-            </div>
-
-            <div *ngIf="!loading && expedientes.length > 0" class="table-container">
-                <table mat-table [dataSource]="expedientes" class="mat-elevation-z2">
+        <mat-card-content class="table-content">
+            <div class="table-container">
+                <table mat-table [dataSource]="expedientes" class="modern-table">
                     <!-- ID Column -->
                     <ng-container matColumnDef="expediente_Id">
-                        <th mat-header-cell *matHeaderCellDef>ID</th>
-                        <td mat-cell *matCellDef="let expediente">{{ expediente.expediente_Id }}</td>
-                    </ng-container>
-
-                    <!-- Caja Column -->
-                    <ng-container matColumnDef="caja_Id">
-                        <th mat-header-cell *matHeaderCellDef>Caja</th>
-                        <td mat-cell *matCellDef="let expediente">
-                            <div class="caja-info">
-                                <span class="caja-id">Caja {{ expediente.caja_Id }}</span>
-                                <span class="caja-details" *ngIf="getCajaInfo(expediente.caja_Id)">
-                                    {{ getCajaInfo(expediente.caja_Id)?.estado }} - {{
-                                    getCajaInfo(expediente.caja_Id)?.ubicacion_Id }}
-                                </span>
+                        <th mat-header-cell *matHeaderCellDef class="table-header">
+                            <span>ID</span>
+                        </th>
+                        <td mat-cell *matCellDef="let expediente" class="table-cell">
+                            <div class="cell-content">
+                                <span class="id-badge">#{{ expediente.expediente_Id }}</span>
                             </div>
                         </td>
                     </ng-container>
 
-                    <!-- Nombre Empleado Column -->
+                    <!-- Employee Name Column -->
                     <ng-container matColumnDef="nombre_Empleado">
-                        <th mat-header-cell *matHeaderCellDef>Empleado</th>
-                        <td mat-cell *matCellDef="let expediente">{{ expediente.nombre_Empleado }}</td>
+                        <th mat-header-cell *matHeaderCellDef class="table-header">
+                            <span>Empleado</span>
+                        </th>
+                        <td mat-cell *matCellDef="let expediente" class="table-cell">
+                            <div class="cell-content">
+                                <div class="empleado-info">
+                                    <fa-icon [icon]="faUser" class="cell-icon"></fa-icon>
+                                    {{ expediente.nombre_Empleado }}
+                                </div>
+                            </div>
+                        </td>
                     </ng-container>
 
-                    <!-- Tipo Expediente Column -->
+                    <!-- Type Column -->
                     <ng-container matColumnDef="tipo_Expediente">
-                        <th mat-header-cell *matHeaderCellDef>Tipo</th>
-                        <td mat-cell *matCellDef="let expediente">
-                            <mat-chip [color]="getTipoExpedienteColor(expediente.tipo_Expediente)">
-                                {{ expediente.tipo_Expediente }}
-                            </mat-chip>
+                        <th mat-header-cell *matHeaderCellDef class="table-header">
+                            <span>Tipo</span>
+                        </th>
+                        <td mat-cell *matCellDef="let expediente" class="table-cell">
+                            <div class="cell-content">
+                                <div class="tipo-info">
+                                    <fa-icon [icon]="faFileAlt" class="cell-icon"></fa-icon>
+                                    {{ expediente.tipo_Expediente }}
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Caja Column -->
+                    <ng-container matColumnDef="caja_Id">
+                        <th mat-header-cell *matHeaderCellDef class="table-header">
+                            <span>Caja</span>
+                        </th>
+                        <td mat-cell *matCellDef="let expediente" class="table-cell">
+                            <div class="cell-content">
+                                <div class="caja-info">
+                                    <fa-icon [icon]="faBox" class="cell-icon"></fa-icon>
+                                    Caja #{{ expediente.caja_Id }}
+                                </div>
+                            </div>
                         </td>
                     </ng-container>
 
                     <!-- Actions Column -->
                     <ng-container matColumnDef="actions">
-                        <th mat-header-cell *matHeaderCellDef>Acciones</th>
-                        <td mat-cell *matCellDef="let expediente">
-                            <button mat-icon-button (click)="openEditDialog(expediente)" matTooltip="Editar"
-                                color="accent">
-                                <fa-icon [icon]="faEdit"></fa-icon>
-                            </button>
-                            <button mat-icon-button (click)="deleteExpediente(expediente)" matTooltip="Eliminar"
-                                color="warn">
-                                <fa-icon [icon]="faTrash"></fa-icon>
-                            </button>
+                        <th mat-header-cell *matHeaderCellDef class="table-header actions-header">
+                            <span>Acciones</span>
+                        </th>
+                        <td mat-cell *matCellDef="let expediente" class="table-cell">
+                            <div class="actions-cell">
+                                <button mat-icon-button class="action-btn primary" title="Ver detalles"
+                                    (click)="viewExpediente(expediente)">
+                                    <fa-icon [icon]="faEye"></fa-icon>
+                                </button>
+                                <button mat-icon-button class="action-btn secondary" title="Editar"
+                                    (click)="openEditDialog(expediente)">
+                                    <fa-icon [icon]="faEdit"></fa-icon>
+                                </button>
+                                <button mat-icon-button class="action-btn danger" title="Eliminar"
+                                    (click)="deleteExpediente(expediente)">
+                                    <fa-icon [icon]="faTrash"></fa-icon>
+                                </button>
+                            </div>
                         </td>
                     </ng-container>
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectExpediente(row)"
+                        [class.selected-row]="selectedExpediente === row"></tr>
                 </table>
             </div>
         </mat-card-content>
